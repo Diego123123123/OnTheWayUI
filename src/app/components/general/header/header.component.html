@@ -1,0 +1,96 @@
+<header class="h-100">
+  <mdb-navbar [SideClass]="'navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar intro-fixed-nav ' + theme.footerBackground" [containerInside]="false">
+    <mdb-navbar-brand>
+      <a class="logo navbar-brand">
+        <img src="assets\images\logoFooter.png" class="animated bounce" height="90" width="140" alt="">        
+      </a>
+    </mdb-navbar-brand>
+    <links>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active waves-light" mdbWavesEffect>
+          <a class="nav-link" (click)="showEvents()">Home
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item dropdown" dropdown>
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light">
+            Events by<br>Categiories<span class="caret"></span>
+          </a>
+          <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary text-justify" role="menu">
+            <tr *ngFor="let category of categories">
+              <a class="dropdown-item waves-light" mdbWavesEffect (click)="showEventsByCategory(category)"><i class="fa fa-{{category.iconName}}" style="width: 15px"></i> {{category.categoryName}}</a>
+            </tr>
+          </div>
+        </li>
+        <li *ngIf="preferedOption" class="nav-item dropdown" dropdown>
+          <a dropdownToggle type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+            Preferred<br>Events<span class="caret"></span>
+          </a>
+          <div class="dropdown-menu dropdown-primary" role="menu">
+              <a *ngIf="enable" class="dropdown-item" (click)="showPreferredEvents()"><i class="fa fa-hourglass-start"></i> Current</a>
+              <a *ngIf="enable" class="dropdown-item" (click)="showPastPreferredEvents()"><i class="fa fa-hourglass-end"></i> Past</a>
+          </div>
+        </li>
+        <li class="nav-item waves-light" mdbWavesEffect>
+          <a class="nav-link" (click)="showSites()">Tourist<br>Places</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav nav-flex-icons">
+          <li class="nav-item waves-light" mdbWavesEffect>
+              <a *ngIf="!enable" class="nav-link" routerLink="user-register-form">Sing Up<i class="fa fa-user-plus" ></i></a>
+          </li>
+          <li class="nav-item waves-light" mdbWavesEffect>
+              <a *ngIf="!enable" class="nav-link" routerLink="login-form">Log In<i class="fa fa-user"></i></a>
+          </li>
+          <li *ngIf="preferedOption" class="nav-item dropdown btn-group" dropdown>
+            <a dropdownToggle type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+              <img [src]="userImage || defaultProfileImg" class="img-fluid rounded-circle z-depth-0" width="50px" height="50px" id="iconimageid">
+            </a>
+            <div class="dropdown-menu dropdown-primary dropdown-menu-right" role="menu">
+                <a *ngIf="enable" class="dropdown-item disabled" ><i class="fa fa-user-circle"></i> {{username}}</a>
+                <div class="dropdown-divider"></div>
+                <a *ngIf="enable" class="dropdown-item" routerLink="user"><i class="fa fa-address-card"></i> My Profile</a>
+                <a *ngIf="enable" class="dropdown-item" (click)="showThemes()"><i class="fa fa-th-large"></i> Themes</a>
+                <a *ngIf="enable" class="dropdown-item" (click)="showCalendar()"><i class="fa fa-calendar"></i> Calendar Events</a>
+                <a *ngIf="enable" class="dropdown-item" (click)="frame.show()"><i class="fa fa-sign-out"></i>Log Out</a>
+            </div>
+          </li>
+      </ul>
+    </links>
+  </mdb-navbar>
+  <div class="view intro-2" [ngStyle]="{'background': 'url(' + theme.imageUrl + ')'}">
+    <div class="full-bg-img" style="margin-top:2%;">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</header>
+<div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div [class]="dialogOptions.type" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header text-center {{ 'headerPrimaryStyle' | theme }}">
+          <p class="heading lead">{{dialogOptions.title}}</p>
+      </div>
+      <!--Body-->
+      <div class="modal-body">
+          <div class="text-center">
+            <div *ngIf="dialogOptions.icon"><i [class]="dialogOptions.icon"></i></div>
+            <p>{{dialogOptions.description}}</p>
+          </div>
+      </div>
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+          <div>
+            <a type="button" mdbBtn color="cyan" class="{{ 'buttonPrimaryStyle' | theme }}" mdbWavesEffect (click)="logout()">{{dialogOptions.btnYes}}
+            </a>
+          </div>
+          <div>
+            <a type="button" mdbBtn color="cyan" outline="true" class="{{ 'buttonPrimaryStyle' | theme }}" mdbWavesEffect (click)="frame.hide()" data-dismiss="modal">{{dialogOptions.btnNo}}</a>
+          </div>
+        </div>
+      </div>
+      <!--/.Content-->
+</div>
+</div>

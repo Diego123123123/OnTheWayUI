@@ -1,0 +1,57 @@
+<!-- Section heading -->
+<div mdbModal #priceModal="mdbModal" class="modal fade top " id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+  <div [class]="priceDialog.type" id="modal" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header {{ 'headerPrimaryStyle' | theme }}">
+        <p class="heading lead" id="myModalLabel">Prices</p>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col" id="colname">Name Place</th>
+              <th scope="col" id="colcost">Cost</th>
+              <th scope="col" id="colmoney">Money</th>
+              <th *ngIf="isAdmin">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let price of prices">
+              <td *ngIf="!isAdmin">{{ price.nameSiteInEvent }}</td>
+              <td *ngIf="!isAdmin">{{ price.amount }}</td>
+              <td *ngIf="!isAdmin">{{ price.money }}</td>
+
+              <td *ngIf="isAdmin && isEvent"><input class="nameInput" id="{{ price.priceId }}name" value="{{ price.nameSiteInEvent }}">
+              <td *ngIf="isAdmin && isEvent"><input class="amountInput" id="{{ price.priceId }}amount" value="{{ price.amount }}">
+              <td *ngIf="isAdmin && isEvent"><input class="moneyInput" id="{{ price.priceId }}money" value="{{ price.money }}">
+              <td *ngIf="isAdmin && !isEvent"><input class="nameInput" id="{{ price.priceSiteId }}name" value="{{ price.nameSiteInEvent }}">
+              <td *ngIf="isAdmin && !isEvent"><input class="amountInput" id="{{ price.priceSiteId }}amount" value="{{ price.amount }}">
+              <td *ngIf="isAdmin && !isEvent"><input class="moneyInput" id="{{ price.priceSiteId }}money" value="{{ price.money }}">
+              <td>
+                <a *ngIf="isAdmin && isEvent" class="teal-text"><i class="fa fa-pencil {{'iconPrimaryStyle' | theme}}" mdbTooltip="Edit the Price" (click)="editPrice(price.priceId)"></i></a>
+                <a *ngIf="isAdmin && isEvent" class="red-text"><i class="fa fa-times {{'iconPrimaryStyle' | theme}}" mdbTooltip="Delete the Price" (click)="deletePrice(price.priceId)"></i></a>
+                <a *ngIf="isAdmin && !isEvent" class="teal-text"><i class="fa fa-pencil {{'iconPrimaryStyle' | theme}}" mdbTooltip="Edit the Price" (click)="editPrice(price.priceSiteId)"></i></a>
+                <a *ngIf="isAdmin && !isEvent" class="red-text"><i class="fa fa-times {{'iconPrimaryStyle' | theme}}" mdbTooltip="Delete the Price" (click)="deletePrice(price.priceSiteId)"></i></a>
+              </td>
+            </tr>
+            <tr>
+              <td><input *ngIf="isAdmin" id="inputName" [(ngModel)]="namePlace">
+              <td><input *ngIf="isAdmin" id="inputAmount" [(ngModel)]="amount">
+              <td><input *ngIf="isAdmin" id="inputMoney" [(ngModel)]="money">
+              <td>
+                <a *ngIf="isAdmin" class="blue-text"><i class="fa fa-plus {{'iconPrimaryStyle' | theme}}" mdbTooltip="Create a new Price" (click)="addPrice()"></i></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button mdbBtn class="{{ 'buttonPrimaryStyle' | theme }}" id="back" (click)="priceModal.hide()" mdbWavesEffect>Close</button>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>

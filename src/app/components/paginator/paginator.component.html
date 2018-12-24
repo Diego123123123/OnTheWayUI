@@ -1,0 +1,25 @@
+<div class="container" *ngIf="items > 3">
+    <nav>
+      <ul class="pagination pg-darkgrey">
+        <li class="page-item">
+          <div class="button">
+            <button mdbBtn type="button" class="{{ 'buttonPrimaryStyle' | theme }}" mdbTooltip="Previus Page" 
+            placement="top" mdbWavesEffect (click)="previusPage()" [disabled]="!validPrevius">
+              <i class="fa fa-chevron-left" aria-hidden="true"></i>
+            </button>              
+          </div>            
+        </li>
+        <ul *ngFor="let page of pages" class="list">
+          <li *ngIf="page" class="page-item {{page.state}}" id="buttom"><a class="page-link" (click)="changePage(page.number)">{{page.number}}</a></li>
+        </ul> 
+        <li class="page-item">
+          <div class="button1">
+            <button mdbBtn type="button" class="{{ 'buttonPrimaryStyle' | theme }}" mdbTooltip="Next Page" 
+            placement="top" mdbWavesEffect (click)="nextPage()" [disabled]="!validNext">
+              <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            </button>
+          </div>
+        </li>      
+      </ul>
+    </nav>
+  </div>

@@ -1,0 +1,15 @@
+<h2 class="py-5">Comments List</h2>
+
+<!--Section: Comments list-->
+<section class="">
+
+  <!--Main wrapper-->
+  <div class="comments-list text-left" *ngIf="comments">
+    <div class="section-heading">
+      <h3>Comments <span class="badge blue">{{comments.count}}</span></h3>
+    </div>
+    <app-comment *ngFor="let comment of comments.results" [comment]="comment"></app-comment>
+  </div>
+  <!--/.Main wrapper-->
+
+</section>

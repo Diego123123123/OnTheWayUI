@@ -1,0 +1,53 @@
+<mdb-card class="form-register-user">
+    <div class=" nav-tabs tabs-3 elegant-color-dark ">
+        <h3 class="modal-title w-100  text-center" id="title"><i class="fa fa-user-plus"></i> Create Administrator</h3>
+      </div>
+  <mdb-card-body>
+    <!-- Material form register -->
+    <form [formGroup]="cardForm" (ngSubmit)="onSubmit(cardForm)">
+
+      <!-- Material input text -->
+      <div class="md-form">
+        <i class="fa fa-user prefix"></i>
+        <input type="text" id="name" formControlName="name" class="form-control" data-error="Invalid name" mdbInputDirective>
+        <label for="name" class="font-weight-light">Administrator Name</label>
+      </div>
+
+      <!-- Material input text -->
+      <div class="md-form">
+        <i class="fa fa-user prefix"></i>
+        <input type="text" id="lastName" formControlName="lastName" class="form-control" data-error="Invalid last name" mdbInputDirective>
+        <label for="lastName" class="font-weight-light">Administrator Last Name</label>
+      </div>
+
+      <!-- Material input text -->
+      <div class="md-form">
+        <i class="fa fa-phone prefix"></i>
+        <input type="text" id="cellPhone" formControlName="cellPhone" class="form-control" data-error="Invalid cell phone" mdbInputDirective>
+        <label for="cellPhone" class="font-weight-light">Administrator Cell Phone</label>
+      </div>
+
+      <!-- Material input email -->
+      <div class="md-form">
+        <i class="fa fa-envelope prefix"></i>
+        <input type="email" id="email" formControlName="email" class="form-control" data-error="Invalid email" mdbInputDirective>
+        <label for="email" class="font-weight-light">Administrator Email Address</label>
+      </div>
+
+      <!-- Material input date -->
+      <div class="md-form">
+        <i class="fa fa-birthday-cake prefix"></i>
+        <input #date type="date" id="birthday" placeholder="" formControlName="birthday" class="form-control" data-error="Invalid date" mdbInputDirective>
+        <label for="birthday" class="font-weight-light">Administrator Birthday</label>
+      </div>
+      
+      <div class="text-center py-4 mt-3">
+        <button mdbBtn color="cyan" class="{{ 'buttonPrimaryStyle' | theme }}" type="submit" [disabled]="!cardForm.valid" mdbWavesEffect>Register</button>
+        <button type="button"  routerLink="/admin-page" mdbBtn color="cyan" outline="true" class="{{ 'buttonPrimaryStyle' | theme }}" data-dismiss="modal" mdbWavesEffect>Cancel</button>
+      </div>
+    </form>
+    <!-- Material form register -->
+  </mdb-card-body>
+</mdb-card>
+
+<app-dialog></app-dialog>

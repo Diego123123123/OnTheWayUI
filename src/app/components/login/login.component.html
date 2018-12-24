@@ -1,0 +1,48 @@
+<mdb-card class="form-login">
+    <!--Panel 7-->
+    <mdb-card-body>
+    <!--Header-->
+    <div class="{{ 'buttonBackground' | theme}}">
+        <h3 class="modal-title w-100  text-center"  id="Login"><i  class="fa fa-user"></i> Login</h3>
+    </div>
+    <!--Header-->
+
+    <!--Body-->
+    <form [formGroup]="loginForm" #a (ngSubmit)="onSubmit(loginForm)">
+      <div class="md-form form-sm">
+        <i class="fa fa-envelope prefix"></i>
+        <input mdbInputDirective type="text" id="email" class="form-control" formControlName="email" minlength="4">
+        <label for="email">Your email </label>
+      </div>
+
+      <div class="md-form form-sm">
+        <i class="fa fa-lock prefix"></i>
+        <input mdbInputDirective type="password" id="password" class="form-control" formControlName="password" data-error="Invalid password">
+        <label for="password">Your password</label>
+      </div>
+
+      <p>
+        <a routerLink="/forgot-my-password" class="blue-text">Forgot Your Password?</a>
+      </p>
+
+      <div class="text-center mt-2">
+        <button mdbBtn class="{{ 'buttonPrimaryStyle' | theme}}" type="submit" mdbWavesEffect [disabled]="!loginForm.valid">
+            Log in
+            <i class="fa fa-sign-in ml-1"></i> 
+        </button>
+      </div>
+      <!--Footer-->
+    </form>              
+            <div class="modal-footer display-footer">
+                <div class="options text-center text-md-right mt-1">
+                    <p>Not a member?
+                        <a routerLink="/user-register-form" class="blue-text">Sign Up</a>
+                    </p>
+                </div>
+                                            
+                <button type="button"  routerLink="/" mdbBtn class="{{ 'buttonSecondaryStyle' | theme}}" data-dismiss="modal" mdbWavesEffect>Cancel</button>
+            </div>
+    </mdb-card-body>
+</mdb-card>
+<app-dialog></app-dialog>
+

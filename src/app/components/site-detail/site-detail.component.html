@@ -1,0 +1,96 @@
+<!--Projects section v.4-->
+<section class="site-detail text-center pb-3">
+
+  <!--Section heading-->
+  <div class="row">
+    <div class="col-sm-3 mt-5">
+      <i class="fa fa-arrow-left {{'iconPrimaryStyle' | theme}} fa-2x hand" aria-hidden="true" mdbTooltip="go back" placement="top" (click)="GoBackWithResfresh()"></i>
+    </div>
+    <div class="col-sm-6">
+      <h2 class="font-weight-bold h1 py-5 event-name">
+        <strong>{{ site.name }}</strong>
+      </h2>
+    </div>
+    <div *ngIf="isAdmin" class="col-sm-3 mt-5">
+      <i id="editButton" class="fa fa-pencil {{'iconPrimaryStyle' | theme}} fa-2x hand" aria-hidden="true" mdbTooltip="Edit the Site" placement="top" [routerLink]="['/edit-site', siteId]"></i>
+    </div>
+  </div>
+  <!--Section description-->
+  <h5 class="grey-text text-center w-responsive mx-auto mb-5">{{site.description}}</h5>
+  <div class="container">
+    <div class="row">
+      <!--Image-->
+      <div class="col align-self-center ">
+        <div>
+          <img [src]="site.imageUrl" class="img w-responsive mx-auto mb-5">
+        </div>
+      </div>
+      <!--Image-->
+    </div>
+    <div class="siteDetail">
+      <div class="price">
+        <h5 *ngIf="isAdmin || havePrices" class="font-weight-bold"><i class="fa fa-money fa-2x green-text" mdbTooltip="Click to see the prices for the site" id="price" placement="top" (click)="showPrices()"></i>Price</h5>
+      </div>
+      <div *ngIf="isAdmin || havePrices" class="events">
+        <h5 class="font-weight-bold"><i class="fa fa-list-alt fa-2x red-text" aria-hidden="true" id="events" mdbTooltip="Click to see the events on the site" (click)="basicModal1.show()"></i>Events</h5>
+      </div>
+      <div *ngIf="!isAdmin && !havePrices" class="eventsHelp">
+        <h5 class="font-weight-bold"><i class="fa fa-list-alt fa-2x red-text" aria-hidden="true" id="events" mdbTooltip="Click to see the events on the site" (click)="basicModal1.show()"></i>Events</h5>
+      </div>
+      <div class="date">
+        <h5 *ngIf="haveSchedule" class="font-weight-bold"><i class="fa fa-calendar-o fa-2x {{'iconPrimaryStyle' | theme}}" aria-hidden="true" id="date" mdbTooltip="Click to see the Calendar" [routerLink]="['/calendar/site', siteId]"></i>Dates</h5>
+      </div>
+      <div class="place">
+        <h5 class="font-weight-bold"><i class="fa fa-map-marker fa-2x {{'iconPrimaryStyle' | theme}}" mdbTooltip="click to see map" id="place" placement="top" (click)="showMap()"></i>Place</h5>
+      </div>
+    </div>
+
+    <div class="help">
+    </div>
+
+    <div class="row mb-3">
+      <div class="modals">
+        <div mdbModal #basicModal1="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-notify" id="modal" role="document">
+            <div class="modal-content">
+              <div class="modal-header {{ 'headerPrimaryStyle' | theme }}" >
+                <p class="heading lead" id="myModalLabel">Events</p>
+              </div>
+              <div class="modal-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Name Event</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let event of events">
+                      <td>{{ event.name }}</td>
+                      <td>
+                        <a id="eyeButton" class="{{'iconPrimaryStyle' | theme}}"><i class="fa fa-eye" mdbTooltip="Go to Event" [routerLink]="['/event-detail', event.eventId]"></i></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <button mdbBtn class="{{ 'buttonPrimaryStyle' | theme }}" id="back" (click)="basicModal1.hide()" mdbWavesEffect>Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <!-- Grid row -->
+      <div class="concurrency" *ngIf="haveSchedule">
+        <p class="grey-text">Open the days:</p>
+        <p class="grey-text">{{concurrencyDays}}</p>
+        <p class="grey-text">Hours: {{startDate}} at {{finishDate}} </p>
+        <h5 *ngIf="open" class="green-text"> This Place is Open right now</h5>
+        <h5 *ngIf="!open" class="red-text"> This Place is Closed right now</h5>
+      </div>
+    </div>
+</section>
+<!-- Projects section v.3 -->
+<app-map-dialog></app-map-dialog>
+<app-price-table></app-price-table>
+<app-dialog></app-dialog>

@@ -1,0 +1,68 @@
+
+<mdb-card class="form-register-user">
+  <mdb-card-body>
+    <!-- Material form register -->
+    <div class=" nav-tabs tabs-3 cyan ">
+      <h3 class="modal-title w-100 text-center"  id="Login"><i  class="fa fa-user-plus "></i> Sign Up </h3>
+    </div>
+    <form [formGroup]="cardForm" (ngSubmit)="onSubmit(cardForm)">
+
+      <!-- Material input text -->
+      <div class="md-form">
+        <i class="fa fa-user prefix"></i>
+        <input type="text" id="name" formControlName="name" class="form-control" data-error="Invalid name" mdbInputDirective>
+        <label for="name" class="font-weight-light">Your name</label>
+      </div>
+
+      <!-- Material input text -->
+      <div class="md-form">
+        <i class="fa fa-user prefix"></i>
+        <input type="text" id="lastName" formControlName="lastName" class="form-control" data-error="Invalid last name" mdbInputDirective>
+        <label for="lastName" class="font-weight-light">Your last name</label>
+      </div>
+
+      <!-- Material input text -->
+      <div class="md-form">
+        <i class="fa fa-phone prefix"></i>
+        <input type="text" id="cellPhone" formControlName="cellPhone" class="form-control" data-error="Invalid cell phone" mdbInputDirective>
+        <label for="cellPhone" class="font-weight-light">Your cell phone</label>
+      </div>
+
+      <!-- Material input email -->
+      <div class="md-form">
+        <i class="fa fa-envelope prefix"></i>
+        <input type="email" id="email" formControlName="email" class="form-control" data-error="Invalid email" mdbInputDirective>
+        <label for="email" class="font-weight-light">Your email address</label>
+      </div>
+
+      <!-- Material input date -->
+      <div class="md-form">
+        <i class="fa fa-birthday-cake prefix"></i>
+        <input #date type="date" id="birthday" placeholder="" formControlName="birthday" class="form-control" data-error="Invalid date" mdbInputDirective>
+        <label for="birthday" class="font-weight-light">Your birthday</label>
+      </div>
+
+      <!-- Material input password -->
+      <div class="md-form">
+        <i class="fa fa-lock prefix"></i>
+        <input type="password" id="password" formControlName="password" class="form-control" data-error="Invalid password" mdbInputDirective>
+        <label for="password" class="font-weight-light">Your password</label>
+      </div>
+
+      <!-- Material input password -->
+      <div class="md-form">
+        <i [ngClass]="{'fa-check': passwordConfirmed, 'fa-close': !passwordConfirmed, 'fa prefix': true}"></i>
+        <input type="password" id="password2" formControlName="password2" class="form-control" data-error="Invalid confirmation" mdbInputDirective>
+        <label for="password2" class="font-weight-light">Confirm your password</label>
+      </div>
+
+      <div class="text-center py-4 mt-3">
+        <button mdbBtn color="cyan" class="waves-light" type="submit" [disabled]="!cardForm.valid" mdbWavesEffect>Register</button>
+        <button type="button"  routerLink="/" mdbBtn color="cyan" outline="true" class="ml-auto" data-dismiss="modal" mdbWavesEffect>Cancel</button>
+      </div>
+    </form>
+    <!-- Material form register -->
+  </mdb-card-body>
+</mdb-card>
+
+<app-dialog></app-dialog>

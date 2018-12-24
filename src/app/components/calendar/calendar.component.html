@@ -1,0 +1,85 @@
+<button *ngIf="detail === 'event'" mdbBtn type="button" id="buttons" mdbWavesEffect class="{{ 'buttonPrimaryStyle' | theme }}" [routerLink]="['/event-detail', itemId]"><mdb-icon icon="arrow-left" size="lg" class="mr-1"></mdb-icon> Go Back</button><br>
+<button *ngIf="detail === 'site'" mdbBtn type="button" id="buttons" mdbWavesEffect class="{{ 'buttonPrimaryStyle' | theme }}" [routerLink]="['/site-detail', itemId]"><mdb-icon icon="arrow-left" size="lg" class="mr-1"></mdb-icon> Go Back</button><br>
+<button *ngIf="detail === 'prefer-event'" mdbBtn type="button" id="buttons" mdbWavesEffect class="{{ 'buttonPrimaryStyle' | theme }}" [routerLink]="['/']"><mdb-icon icon="arrow-left" size="lg" class="mr-1"></mdb-icon> Go Back</button><br>
+<mdb-card class="calendar">
+  <div class="row text-center">
+    <div class="col-md-4">
+      <div class="btn-group">
+        <div class="{{ 'buttonPrimaryStyle' | theme }}"
+             mwlCalendarPreviousView
+             [view]="view"
+             [(viewDate)]="viewDate"
+             (viewDateChange)="fetchEvents()">
+          Previous
+        </div>
+        <div class="{{ 'buttonSecondaryStyle' | theme }}"
+             mwlCalendarToday
+             [(viewDate)]="viewDate"
+             (viewDateChange)="fetchEvents()">
+          Today
+        </div>
+        <div class="{{ 'buttonPrimaryStyle' | theme }}"
+             mwlCalendarNextView
+             [view]="view"
+             [(viewDate)]="viewDate"
+             (viewDateChange)="fetchEvents()">
+          Next
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+    </div>
+    <div class="col-md-4">
+      <div class="btn-group">
+        <div class="{{ 'buttonPrimaryStyle' | theme }}"
+             (click)="changeView('month')"
+             [class.active]="view === 'month'">
+          Month
+        </div>
+        <div class="{{ 'buttonPrimaryStyle' | theme }}"
+             (click)="changeView('week')"
+             [class.active]="view === 'week'">
+          Week
+        </div>
+        <div class="{{ 'buttonPrimaryStyle' | theme }}"
+             (click)="changeView('day')"
+             [class.active]="view === 'day'">
+          Day
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <ng-template #loading>
+    <div class="text-center">
+      <i class="fa fa-spin fa-spinner fa-5x"></i>
+      <br>
+      Loading Calendar...
+    </div>
+  </ng-template>
+
+  <div *ngIf="events$ | async; else loading; let events">
+    <div [ngSwitch]="view">
+      <mwl-calendar-month-view *ngSwitchCase="'month'"
+                               [viewDate]="viewDate"
+                               [events]="events"
+                               [activeDayIsOpen]="activeDayIsOpen"
+                               (dayClicked)="dayClicked($event.day)"
+                               (eventClicked)="eventClicked($event.event)">
+      </mwl-calendar-month-view>
+      <mwl-calendar-week-view *ngSwitchCase="'week'"
+                              [viewDate]="viewDate"
+                              [events]="events"
+                              (eventClicked)="eventClicked($event.event)">
+      </mwl-calendar-week-view>
+      <mwl-calendar-day-view *ngSwitchCase="'day'"
+                             [viewDate]="viewDate"
+                             [events]="events"
+                             (eventClicked)="eventClicked($event.event)">
+      </mwl-calendar-day-view>
+    </div>
+  </div>
+
+</mdb-card>

@@ -1,0 +1,24 @@
+
+<mdb-card class="form-create-facebook-event">
+        <!-- Material form register -->
+        <div class=" nav-tabs tabs-3 elegant-color-dark ">
+            <h3 class="modal-title w-100  text-center" id="CreateFacebookEvent"><i class="fa fa-facebook-square"></i> Create Facebook Event</h3>
+        </div>
+        <form [formGroup]="cardForm" (ngSubmit)="onSubmit(cardForm)">
+
+            <!-- Material input text -->
+            <div class="md-form">
+                <i class="fa fa-key prefix"></i>
+                <input type="text" id="eventId" formControlName="eventId" class="form-control" data-error="Invalid Id" mdbInputDirective>
+                <label for="eventId" class="font-weight-light">Facebook Event Id</label>
+            </div>
+
+            <div class="text-center py-4 mt-3">
+                <button mdbBtn color="cyan" class="{{ 'buttonPrimaryStyle' | theme }}" type="submit" [disabled]="!cardForm.valid" mdbWavesEffect>Submit</button>
+                <button type="button" mdbBtn color="cyan" class="{{ 'buttonPrimaryStyle' | theme }}" routerLink="/create-event" outline="true" data-dismiss="modal" mdbWavesEffect>Cancel</button>
+            </div>
+        </form>
+        <!-- Material form register -->
+</mdb-card>
+
+<app-dialog></app-dialog>

@@ -1,0 +1,31 @@
+
+<!--Grid column-->
+<div *ngIf="comment" class="comment">
+
+  <!--First row-->
+  <div class="row">
+    <!--Image column-->
+    <div class="col-sm-2 col-12">
+      <img [src]="comment.userImage" class="avatar card-img-100 rounded-circle z-depth-1-half">
+    </div>
+    <!--/.Image column-->
+    <!--Content column-->
+    <div class="col-sm-10 col-12">
+      <a>
+        <h3 class="user-name">{{comment.userName}}</h3>
+      </a>
+      <div class="orange-text">
+        <i *ngFor="let star of rate" [ngClass]="{'fa': true, 'fa-star': star, 'fa-star-o':!star}" > </i>
+      </div>
+      <div class="card-data">
+        <ul class="list-unstyled">
+          <li class="comment-date"><i class="fa fa-clock-o"></i>{{date.toISOString().split('T')[0]}}</li>
+        </ul>
+      </div>
+      <p class="comment-text">{{comment.message}}</p>
+    </div>
+    <!--/.Content column-->
+  </div>
+  <!--/.First row-->
+</div>
+<!--Grid column-->

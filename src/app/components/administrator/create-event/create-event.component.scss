@@ -1,0 +1,116 @@
+.form-create-event {
+    width: 90%;
+    height: 80%;
+    margin: 5% 5%;
+}
+#edit{
+    float: right;
+}
+#myModalLabel{
+    color: black;
+}
+#buttons {
+  float: right;
+  font-size: 100%;
+  margin-top: 10%;
+}
+.modals{
+    padding-left: 30%;
+    padding-top: 2%;
+    padding-right: 25%;
+}
+.modal-des{
+    padding-right: 40%;
+}
+.modal-title{
+    color: white;
+}
+.relative{
+    font-size: 100%;
+}
+mat-form-field{
+    padding-left: 5%;
+    padding-top: 2%;
+    padding-right: 45%;
+}
+.letters{
+    padding-left: 4%;
+    padding-right: 4%;
+    padding-top: 1%;
+}
+.letters1{
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+.example-margin{
+    padding-left: 32%;
+    padding-right: 4%;
+    padding-top: 1%;
+}
+.button{
+    float:none;
+    text-align:center;
+    padding-bottom: 4%;
+}
+
+label {
+    cursor: pointer;
+    /* Style as you please, it will become the visible UI component. */
+ }
+ 
+ #upload-photo {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+ }
+ .picker{
+    padding-left: 15%;
+    padding-top: 2%;
+    padding-right: 15%;
+ }
+ .date1{
+    float:none;
+     top: 20%;
+ }
+.column {
+    float: left;
+    width: 48%;
+    padding-left: 2%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.row-edit:after {
+    content: "";
+    display: table;
+    clear: both;
+    max-width: 5%;
+    float: right;
+}
+.row {
+    display: flex;
+}
+.column-edit {
+    float: left;
+}
+
+.left {
+  width: 70%;
+}
+.right {
+    width: 10%;
+}
+.edits-left{
+    padding-top: 485%;
+}
+.edits-rigth{
+    padding-top: 85%;
+}
+.edits-rigth1{
+    padding-top: 125%;
+}

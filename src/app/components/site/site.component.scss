@@ -1,0 +1,54 @@
+.site-list {
+    width: 80%;
+    margin: 0% 10%;
+    margin-top: 5%;
+    height: 400px;
+}
+
+.site-list div {
+    height: 100%;
+    width: 100%;
+    background-size: 100%;
+}
+
+.site-list div div {
+    height: 100%;
+    width: 100%;
+}
+
+.site-list div div div{
+    height: 90%;
+    width: 100%;
+}
+
+.site-list div div div h6{
+    height: 10%;
+    width: 100%;
+}
+
+
+.main-content {
+    transform-style: preserve-3d;
+    transition: 2s ease;
+    perspective: 100;
+}
+
+.main-content:hover {
+    transform: rotateY(180deg);
+}
+
+.front, .back {
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    height: 46%;
+    width: 100%;
+    overflow: hidden;
+    white-space: normal;
+    text-overflow: ellipsis;
+}
+
+.back {
+    transform: rotateY(180deg);
+    text-align: justify;
+}

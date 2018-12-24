@@ -1,0 +1,170 @@
+<div class="row">
+  <div class="col-md-4 mx-auto my-5">
+    <!--Card-->
+    <mdb-card dark="true" id="edit">
+
+      <!--Card image-->
+      <div class="view overlay waves-light" mdbWavesEffect>
+
+
+                <img src="{{user.imageUserUrl || defaultProfileImg}}" id="userimagee" class="img w-responsive mx-auto mb-5">
+
+
+        <a>
+          <div class="mask rgba-white-slight">
+            <button type="button" id="change-image" (click)="basicModal1.show()" mdbBtn class="{{ 'buttonPrimaryStyle' | theme }}" mdbWavesEffect>
+              <i class="fa fa-pencil"></i> Change Image </button>
+          </div>
+        </a>
+      </div>
+      <!--/.Card image-->
+
+      <!--Card content-->
+      <mdb-card-body class="elegant-color white-text">
+        <!--Title-->
+        <mdb-card-title>
+          <div class="row">
+            <div class="column">
+              <h4>{{user.name}} {{user.lastName}}</h4>
+            </div>
+            <div class="column">
+              <h4>
+                <i id="informationEdit" class="fa fa-pencil fa-1x {{'iconPrimaryStyle' | theme}}" mdbTooltip="Change Name"
+                  (click)="basicModal.show()" placement="top"></i>
+              </h4>
+            </div>
+          </div>
+        </mdb-card-title>
+
+
+        <div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+                  <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title w-100" id="myModalLabel">Edit</h4>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="cardForm">
+                  <div class="modal-des">
+                    <div class="md-form">
+                      <i class="fa fa-user prefix"></i>
+                      <input type="text" id="name" formControlName="name" (ngModelChange)="verife()" class="form-control" data-error="Invalid Name"
+                        value="{{ user.name }}" mdbInputDirective>
+                      <label for="name" class="font-weight-light">Name</label>
+                    </div>
+                  </div>
+                  <div class="modal-des">
+                    <div class="md-form">
+                      <i class="fa fa-user prefix"></i>
+                      <input type="text" id="lastName" formControlName="lastName" (ngModelChange)="verife()" class="form-control" value="{{ user.lastName }}"
+                        data-error="Invalid Last Name" mdbInputDirective>
+                      <label for="lastName" class="font-weight-light">Last Name</label>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" id="informationButton" mdbBtn class="{{ 'buttonPrimaryStyle' | theme }}" (click)="configureDatas(basicModal)"
+                  [disabled]="!ready" mdbWavesEffect>
+                  <i class="fa fa-check"></i>Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="modals">
+          <div mdbModal #basicModal1="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal1.hide()">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                  <h4 class="modal-title w-100" id="myModalLabel">
+                    <i class="fa fa-camera"></i> Add Image for Event</h4>
+                </div>
+                <div class="modal-body">
+                  <p class="letters">Select an Image of your computer:</p>
+                  <app-upload-images (saveImage)="configureImage($event, basicModal1)"></app-upload-images>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div mdbModal #basicModal2="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal2.hide()">
+                  <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title w-100" id="myModalLabel">Edit</h4>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="emailForm">
+                  <div class="md-form">
+                    <i class="fa fa-birthday-cake prefix"></i>
+                    <input #date type="date" id="birthday" placeholder="" (ngModelChange)="verifeChange()" value="{{user.birthday | date : 'fullDate'}}"
+                      formControlName="birthday" class="form-control" data-error="Invalid date" mdbInputDirective>
+                    <label for="birthday" class="font-weight-light">Your birthday</label>
+                  </div>
+                  <div class="modal-des">
+                    <div class="md-form">
+                      <i class="fa fa-phone  prefix"></i>
+                      <input type="text" id="phone" formControlName="phone" (ngModelChange)="verifeChange()" value="{{ user.phone }}" data-error="Invalid phone"
+                        mdbInputDirective>
+                      <label for="phone" class="font-weight-light">Phone</label>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" id="informationButton" mdbBtn class="{{ 'buttonPrimaryStyle' | theme }}" (click)="configure(basicModal2)"
+                  [disabled]="!readyDate" mdbWavesEffect>
+                  <i class="fa fa-check"></i>Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <hr class="hr-light">
+
+        <!--Text-->
+
+        <mdb-card-text class="white-text">
+          <div class="row">
+            <div class="column">
+              <strong>Email: </strong>{{user.email}}
+              <br>
+              <strong>Birthday: </strong>{{user.birthday | date : 'fullDate'}}
+              <br>
+              <strong>Phone: </strong>{{user.phone}}
+            </div>
+            <div class="column">
+              <h4>
+                <i id="dataEdit" class="fa fa-pencil fa-1x {{'iconPrimaryStyle' | theme}}" mdbTooltip="Change the Data" (click)="basicModal2.show()"
+                  placement="top"></i>
+              </h4>
+            </div>
+          </div>
+        </mdb-card-text>
+        <button type="button" mdbBtn color="cyan" id="change-password" class="{{ 'buttonPrimaryStyle' | theme }}"
+        (click)="changePassword(user.email)" mdbWavesEffect>
+          <i class="fa fa-pencil"></i> Change Password </button>
+      </mdb-card-body>
+      <!--/.Card content-->
+    </mdb-card>
+    <!--/.Card-->
+  </div>
+</div>

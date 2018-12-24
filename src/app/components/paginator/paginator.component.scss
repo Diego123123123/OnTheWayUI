@@ -1,0 +1,26 @@
+.container{
+    min-width: 100%;
+    display: flex;
+    justify-content: center;
+    filter:  alpha(opacity=80);
+  }
+  .button{
+    padding-top: 1%;
+  }
+  .list{
+    padding-top: 1%;
+    list-style: none;
+  }
+  .numbers{
+    padding-right: 3%;
+    list-style: none;
+  }
+  .button1{
+    padding-left: 30%;
+  }
+#buttom{
+  color: black;
+  background: white;
+  opacity: 0.8;
+  border-radius: 10%;
+}

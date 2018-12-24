@@ -1,0 +1,13 @@
+<div class="row filter">
+  <div class="col-md-4">
+    <div class="form-inline">
+      <div class="md-form" id="input">
+        <i class="fa fa-search prefix" id="{{'color' | theme}}"></i>
+        <input mdbInputDirective [(ngModel)]="filterName" (keyup)="applyFilter()" type="search" id="form2" class="{{'color' | theme}}-text form-control">
+        <label for="form2" class="{{'color' | theme}}-text">Search by Name</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+  

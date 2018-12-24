@@ -1,0 +1,18 @@
+<footer [class]="'page-footer ' + theme.footerBackground">
+  <div class="container-fluid text-center">
+    <div class="row">
+      <div class="image col-md-6">
+        <img src="assets\images\logoPaisaje.png" height="90" width="140" alt="">  
+        <p>Download our application<br>for iOS and Android!</p>
+      </div>
+      <div class="image col-md-6">
+        <button mdbBtn type="button" mdbWavesEffect (click)="infoContacts()" class="{{ 'buttonPrimaryStyle' | theme}}">Contact Us</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright text-center py-3">
+    <div class="container-fluid">
+      © 2018 Copyright: <a href="#"> Softure07 - OnTheWay </a>
+    </div>
+  </div>
+</footer>

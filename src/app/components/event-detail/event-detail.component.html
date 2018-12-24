@@ -1,0 +1,60 @@
+<!--Projects section v.4-->
+<section class="event-detail text-center pb-3" >
+
+    <!--Section heading-->
+    <div class="row">
+        <div class="col-sm-3 mt-5">
+            <i class="fa fa-arrow-left {{'iconPrimaryStyle' | theme}} fa-2x hand" aria-hidden="true" mdbTooltip="go back" placement="top" (click)="GoBackWithResfresh()" ></i>
+        </div>
+        <div class="col-sm-6 ">
+            <h2 class="font-weight-bold h1 py-5 event-name">
+                <strong>{{event.name}}</strong>
+            </h2>
+        </div>
+        <div class="col-sm-3 mt-5">
+            <i *ngIf="favorite" (click)="discardStar()" class="fa fa-star fa-2x {{'iconPrimaryStyle' | theme}} star" aria-hidden="true" mdbTooltip="unselect this preferred event" placement="top" mdbWavesEffect></i>
+            <i *ngIf="!favorite" (click)="addStar()" class="fa fa-star-o fa-2x {{'iconPrimaryStyle' | theme}} star" aria-hidden="true" mdbTooltip="define as your preferred event" placement="top" mdbWavesEffect></i>
+        </div>
+    </div>
+    
+    <!--Section description-->
+    <h5 class="grey-text text-center w-responsive mx-auto mb-5">{{event.description}}
+    </h5 >
+    <div class="container">
+      <div class="row">
+        <!--Image-->
+        <div class="col align-self-center ">
+          <div>
+            <img [src]="event.imageUrl" class="img w-responsive mx-auto mb-5">
+          </div>
+        </div>
+        <!--Image-->
+      </div>
+
+      <h5 class="font-weight-bold"> Category : {{event.nameCategory}}</h5>
+
+      <div class="eventDetail">
+        <div *ngIf="isAdmin || havePrices" class="price">
+          <h5 class="detail font-weight-bold"><i class="fa fa-money fa-2x green-text" id="price" mdbTooltip="Click to see the prices for the event" placement="top" (click)="showPrices()"></i>Price</h5>
+        </div>
+        <div *ngIf="!isAdmin && !havePrices" class="dateHelp">
+          <h5 class="detail font-weight-bold"><i class="fa fa-calendar-o fa-2x {{'iconPrimaryStyle' | theme}}" id="date" aria-hidden="true" [routerLink]="['/calendar/event', eventId]"></i>Dates</h5>
+        </div>
+        <div *ngIf="isAdmin || havePrices" class="date">
+          <h5 class="detail font-weight-bold"><i class="fa fa-calendar-o fa-2x {{'iconPrimaryStyle' | theme}}" id="date" aria-hidden="true" [routerLink]="['/calendar/event', eventId]"></i>Dates</h5>
+        </div>
+        <div class="place">
+          <h5 class="detail font-weight-bold"><i class="fa fa-map-marker fa-2x {{'iconPrimaryStyle' | theme}}" id="place" mdbTooltip="click to see map" placement="top" (click)="showMap()"></i>Place</h5>
+        </div>
+      </div>
+        <!-- Grid row -->
+      <div class="eventDetails">
+        <p class="detail grey-text mb-3">Location: {{event.nameSite}}</p>
+        <p class="detail grey-text">Date: {{event.startDate | date : 'fullDate'}} to {{event.finishDate | date : 'fullDate'}}</p>
+      </div>                            
+    </div>        
+  </section>
+  <!-- Projects section v.3 -->
+<app-map-dialog></app-map-dialog>
+<app-price-table></app-price-table>
+<app-dialog></app-dialog>

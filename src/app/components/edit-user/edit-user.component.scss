@@ -1,0 +1,45 @@
+#edit{
+    top: 12%;
+    margin-bottom: 16%;
+    width: 120%;
+    margin-left: -10%;
+}
+.column {
+    float: left;
+    width: 50%;
+    padding-left: 2%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+#informationEdit{
+    padding-left: 70%;
+}
+#change-password{
+    margin-left: 30%;
+}
+#change-image{
+    margin-left: 35%;
+    margin-top: 45%;
+}
+#dataEdit{
+    padding-left: 70%;
+    width: 40%;
+    height: 40%;
+}
+.modal-body{
+    color: black;
+}
+.modal-header{
+    color: black;
+}
+.modal-des{
+    padding-right: 40%;
+}
+#userimagee{
+  max-width: 100%;
+  max-height: 100%;
+}

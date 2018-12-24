@@ -1,0 +1,85 @@
+
+<section class="container section pb-5 text-center list" *ngIf="event">
+
+  <!--Section heading-->
+  
+<!--========================================================================================================================================-->
+  <h2 class="font-bold py-5 mb-3">Event Raiting</h2>
+
+  <!--Section: Author box-->
+  <section class="text-left">
+
+    <!--Author box-->
+    <div class="author-box">
+      <hr>
+      <div class="row">
+        <!--Avatar-->
+        <div class="col-12 col-sm-2">
+          <img src="{{event.imageUrl}}" class="img-fluid rounded-circle z-depth-2" style="min-height: 150px; max-height: 150px;">
+        </div>
+        <!--Author Data-->
+        <div class=" col-12 col-sm-10">
+          <h2 class="section-heading">{{event.name}}</h2>
+          <div class="orange-text">
+            <i *ngFor="let star of rate" [ngClass]="{'fa': true, 'fa-star': star, 'fa-star-o':!star}" > </i>
+          </div>
+          <p *ngIf="comments" class="black-text">{{comments.count}} <i class="fa fa-users pr-1"> </i></p>
+          <p>{{event.description}}
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/.Author box-->
+
+  </section>
+<!--========================================================================================================================================-->
+
+
+
+  <button *ngIf="available" type="button" mdbBtn class="{{ 'buttonPrimaryStyle' | theme}}" rounded="true" data-toggle="modal" data-target="#basicExample" (click)="frame.show()"
+    mdbWavesEffect>Leave a Raiting</button>
+
+  <div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold">Leave a comment</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body mx-3">
+          <section class="">
+
+              <!--Leave a reply form-->
+              <div class="reply-form">
+            
+                <div class="d-md-flex flex-md-fill px-1">
+                  <div class="d-flex justify-content-center mr-md-5 mt-md-5 mt-4">
+                    <img class="avatar card-img-100 rounded-circle z-depth-1-half" [src]="userImage" alt="avatar">
+                  </div>
+                  <div class="md-form w-100">
+                    <textarea class="form-control validate md-textarea pt-0" [formControl]="subscriptionFormModalComment" mdbInputDirective id="exampleFormControlTextarea1" rows="5" placeholder="Write something here..."></textarea>
+                  </div>
+                </div>
+                <div class="orange-text">
+                  <i style="cursor: pointer" *ngFor="let star of score; index as i" [ngClass]="{'fa': true, 'fa-star': star, 'fa-star-o':!star}" (click)="onSelect(i + 1)" (mouseover)="onSelect(i + 1)"></i>
+                </div>
+              </div>
+              <!--/.Leave a reply form-->
+            
+            </section>
+        </div>
+        <div class="modal-footer d-flex justify-content-center">
+          <button mdbBtn color="indigo" class="{{ 'buttonPrimaryStyle' | theme}}" [disabled]="!subscriptionFormModalComment.valid" (click)="addComment(frame)" mdbWavesEffect>Submit
+            <i class="fa fa-paper-plane-o ml-1"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--========================================================================================================================================-->
+  <app-comments-list [comments]="comments"></app-comments-list>
+</section>
+<app-dialog></app-dialog>

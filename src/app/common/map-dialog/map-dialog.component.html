@@ -1,0 +1,28 @@
+<!-- Section heading -->
+<div mdbModal #frame="mdbModal" class="modal fade top " id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+aria-hidden="true">
+  <div [class]="mapDialog.type"  id="modal" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header {{ 'headerPrimaryStyle' | theme }}">
+      <p class="heading lead">Map</p>
+      </div>  
+
+      <!--Body-->
+      <div class="modal-body">
+        <agm-map [latitude]="eventlat" [longitude]="eventlng" [zoom]="zoom" class=" w-responsive mx-auto mb-5">
+          <agm-marker [latitude]="eventlat" [longitude]="eventlng">
+            <agm-info-window>
+              <strong>{{eventPlaceName}}</strong>
+            </agm-info-window>
+          </agm-marker>
+        </agm-map>
+        <button mdbBtn class="{{ 'buttonPrimaryStyle' | theme }}" id="back" (click)="frame.hide()" mdbWavesEffect >Close</button>
+        <br>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+
+</div>

@@ -1,0 +1,4 @@
+<button mdbBtn *ngIf="isAdmin" type="button" id="buttons" mdbWavesEffect class="{{ 'buttonPrimaryStyle' | theme }}" routerLink="/create-event"><mdb-icon icon="plus-square" size="lg" class="mr-1"></mdb-icon> Create Event</button><br>
+<div class="space"></div>
+<app-events-list></app-events-list>
+<app-paginator (data)="getCategoryEvents($event)"></app-paginator>

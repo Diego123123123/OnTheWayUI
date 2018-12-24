@@ -1,0 +1,12 @@
+<button mdbBtn *ngIf="isAdmin" type="button" id="buttons" mdbWavesEffect class="{{ 'buttonPrimaryStyle' | theme }}" routerLink="/create-event">
+    <mdb-icon icon="plus-square" size="lg" class="mr-1"></mdb-icon> Create Event</button>
+<br>
+<div *ngIf="notEvents; then EmptyEvents else RecentEvents"></div>
+<ng-template #EmptyEvents>
+    <app-not-exist-events></app-not-exist-events>
+</ng-template>
+<ng-template #RecentEvents>
+    <app-filter (filter)="refreshEvents($event)"></app-filter>
+    <app-events-list></app-events-list>
+    <app-paginator (data)="refreshEvents($event)"></app-paginator>
+</ng-template>

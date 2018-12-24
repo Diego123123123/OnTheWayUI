@@ -1,0 +1,133 @@
+<button mdbBtn type="button" id="buttons" mdbWavesEffect class="{{ 'buttonPrimaryStyle' | theme }}" routerLink="/create-facebook-event"><mdb-icon icon="plus-square" size="lg" class="mr-1"></mdb-icon> Create Facebook Event</button><br>
+<mdb-card class="form-create-event">
+  <div class="row">
+    <div class="column">
+      <div class="row-edit">
+        <div class="column-edit left">
+          <h4 class="letters"><i class="fa fa-bars"></i> Main Event Data</h4>
+          <form [formGroup]="cardForm" (ngSubmit)="createDates(cardForm)">
+            <div class="modal-des">
+              <div class="md-form">
+                <i class="fa fa-user prefix"></i>
+                <input type="text" id="name" formControlName="eventName" class="form-control" [(ngModel)]="nameEvent" data-error="Invalid name" mdbInputDirective>
+                <label for="name" class="font-weight-light">Event Name</label>
+              </div>
+            </div>
+            <div class="modal-des">
+              <div class="md-form">
+                <i class="fa fa-pencil prefix"></i>
+                <textarea mdbInputDirective type="text" formControlName="description" [(ngModel)]="descriptionEvent" id="form8" class="md-textarea form-control" data-error="Invalid description" rows="1"></textarea>
+                <label for="form8">Description</label>
+              </div>
+            </div>
+          </form>
+          <h4 class="letters"><i class="fa fa-globe"></i> Event Location</h4>
+          <mat-form-field>
+              <mat-select placeholder="Select Event Location" [(value)]="siteName">
+                <mat-option *ngFor="let site of sites" [value]="site.name" (click)="viewSite(site.name, site.siteId)">
+                  {{site.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <p class="letters1" *ngIf="readySite">{{siteSelect}}</p>
+            <div class="modals" *ngIf="!readySite">
+                <button mdbBtn type="button" (click)="basicModal3.show()" mdbWavesEffect class="{{ 'buttonPrimaryStyle' | theme }}">Create Site</button>
+            </div>
+        </div>
+        <div class="column-edit right">
+          <div class="edits-left">
+            <button mdbBtn type="button" *ngIf="site" (click)="basicModal3.show()" mdbWavesEffect class="{{ 'buttonPrimaryStyle' | theme }}"><mdb-icon icon="edit" size="lg" class="mr-1"></mdb-icon></button>
+          </div>
+          <div mdbModal #basicModal3="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal3.hide()">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title w-100" id="myModalLabel"><i class="fa fa-globe"></i> Create Site</h4>
+                  </div>
+                  <div class="modal-body">
+                    <app-create-site (saveSite)="onSubmitSite($event)"></app-create-site>
+                    <p class="letters1" *ngIf="readySite">{{siteSelect}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="row-edit">
+        <div class="column-edit left">
+            <h4 class="letters"><i class="fa fa-calendar"></i> Event Date</h4>
+            <app-create-schedule (saveSchedule)="onSubmitSchedule($event)"></app-create-schedule>
+            <p class="letters" *ngIf="schedule"><strong> Start Date:</strong> {{dateStartShow | date : 'fullDate'}}
+              {{dateStartShow | date : 'shortTime'}}</p>
+            <p class="letters" *ngIf="schedule"><strong> End Date:</strong> {{dateEndShow | date : 'fullDate'}}
+              {{dateEndShow | date : 'shortTime'}}</p>
+            <div class="modals">
+              <div mdbModal #basicModal1="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal1.hide()">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                      <h4 class="modal-title w-100" id="myModalLabel"><i class="fa fa-camera"></i> Add Image for Event</h4>
+                    </div>
+                    <div class="modal-body">
+                      <p class="letters">Select an Image of your computer:</p>
+                      <app-upload-images [typeupload]="'event'" (saveImage)="onSubmit($event, basicModal1)"></app-upload-images>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="letters" *ngIf="image"><strong> Name Image:</strong> {{nameImage}}</p>
+            <mat-form-field>
+                <mat-select placeholder="Select Event Category">
+                  <mat-option *ngFor="let category of categories" [value]="category.categoryName" (click)="viewCategory(category.categoryName, category.categoryId)">
+                    {{category.categoryName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+          </div>
+          <div class="column-edit right">
+            <div class="edits-rigth">
+              <button mdbBtn type="button" *ngIf="schedule" (click)="basicModal2.show()" mdbWavesEffect class="{{ 'buttonPrimaryStyle' | theme }}"><mdb-icon icon="edit" size="lg" class="mr-1"></mdb-icon></button>
+            </div>
+            <div mdbModal #basicModal2="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal2.hide()">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                      <h4 class="modal-title w-100" id="myModalLabel"><i class="fa fa-calendar"></i> Edit Schedule</h4>
+                    </div>
+                    <div class="modal-body">
+                      <app-create-schedule (saveSchedule)="onSubmitSchedule($event)"></app-create-schedule>
+                      <p class="letters" *ngIf="schedule"><strong> Agreed Date:</strong></p>
+                      <p class="letters" *ngIf="schedule"><strong> Start Date:</strong> {{dateStartShow}}</p>
+                      <p class="letters" *ngIf="schedule"><strong> End Date:</strong> {{dateEndShow}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            <div class="edits-rigth1">
+              <button mdbBtn type="button" *ngIf="image" mdbWavesEffect class="{{ 'buttonPrimaryStyle' | theme }}" (click)="basicModal1.show()"><mdb-icon icon="edit" size="lg" class="mr-1"></mdb-icon></button>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="button">
+    <button type="button" [disabled]="!isComplete" mdbBtn color="cyan" class="{{ 'buttonPrimaryStyle' | theme }}" (click)="createEvent()" mdbWavesEffect><i class="fa fa-check"></i> Create Event</button>
+    <button type="button" *ngIf="!image" mdbBtn color="cyan" block="true" class="{{ 'buttonPrimaryStyle' | theme }}" (click)="basicModal1.show()" mdbWavesEffect><i class="fa fa-image"></i> Add Image</button>
+    <button mdbBtn type="button" *ngIf="image" mdbWavesEffect class="{{ 'buttonPrimaryStyle' | theme }}" (click)="basicModal1.show()"><mdb-icon icon="edit" size="lg" class="mr-1"></mdb-icon>Change Image</button>
+  </div>
+</mdb-card>
+
+<app-dialog></app-dialog>
