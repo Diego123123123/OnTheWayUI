@@ -15,6 +15,7 @@ script:
   - ng build
 
 after_success:
+  - firebase use otw-soft07
   - firebase deploy --token $FIREBASE_TOKEN
 
 notifications:
