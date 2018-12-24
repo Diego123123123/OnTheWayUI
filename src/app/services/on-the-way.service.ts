@@ -12,7 +12,6 @@ import { RequestOptions } from '@angular/http';
 
 export class OnTheWayService {
   //protected urlAzure: string = 'https://onthewaybackend20181205043641.azurewebsites.net/';
-  protected urlAzure: string = 'https://onthewaybackend20181205043641.azurewebsites.net/';
 
   protected url: string;
   constructor(protected endpoint: string, protected httpClient: HttpClient) {
