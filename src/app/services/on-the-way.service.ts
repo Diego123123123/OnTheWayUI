@@ -11,8 +11,8 @@ import { RequestOptions } from '@angular/http';
 @Injectable()
 
 export class OnTheWayService {
-  //protected urlAzure: string = 'https://onthewaybackend20181205043641.azurewebsites.net/';
-  protected urlAzure: string = 'https://localhost:56667';
+  protected urlAzure: string = 'https://onthewaybackend20181205043641.azurewebsites.net/';
+  //protected urlAzure: string = 'https://localhost:56667';
 
   protected url: string;
   constructor(protected endpoint: string, protected httpClient: HttpClient) {
