@@ -1,328 +1,143 @@
-<p class="letters">If you can't find the place where the event will be, you can create it here:</p>
-<div id="createsite">
-    <form [formGroup]="cardForm">
-        <div class="modals">
-          <div class="md-form">
-            <i class="fa fa-user prefix"></i>
-            <input type="text" id="name" formControlName="eventName" [(ngModel)]="label" class="form-control" data-error="Invalid name" mdbInputDirective>
-            <label for="name" class="font-weight-light">Site Name</label>
-          </div>
-        </div>
-        <div class="modals">
-          <div class="md-form">
-            <i class="fa fa-pencil prefix"></i>
-            <textarea mdbInputDirective type="text" formControlName="description" [(ngModel)]="descritionSite" id="form8" class="md-textarea form-control" data-error="Invalid description" rows="1"></textarea>
-            <label for="form8">Description</label>
-          </div>
-        </div>
-        <div class="modals">
-          <div class="md-form">
-            <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="mapClicked($event)" [zoomControl]="true">
-              <agm-marker (markerClick)="clickedMarker()"
-                          [latitude]="markedLat"
-                          [longitude]="markedLng"
-                          [label]="label"></agm-marker>
-            </agm-map>
-          </div>
-        </div>
-      </form>
-
-        <div class="modals">
-          <button type="button" *ngIf="!image" mdbBtn color="cyan" block="true" class="{{ 'buttonPrimaryStyle' | theme }}" (click)="basicModal1.show()" mdbWavesEffect><i class="fa fa-image"></i> Add Image</button>
-          <div mdbModal #basicModal1="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal1.hide()">
-                    <span aria-hidden="true">×</span>
-                  </button>
-                  <h4 class="modal-title w-100" id="myModalLabel1"><i class="fa fa-camera"></i> Add Image for Event</h4>
-                </div>
-                <div class="modal-body">
-                  <p class="letters">Select an Image of your computer:</p>
-                  <app-upload-images [typeupload]="'event'" (saveImage)="onSubmit($event, basicModal1)"></app-upload-images>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-  <div class="modalsConcurrency">
-    <div>
-      <h5 *ngIf="patchSchedule.haveSchedule" class="detail font-weight-bold mb-3">Tourist Place Schedule<i id="informationEdit" class="fa fa-pencil fa-1x {{'iconPrimaryStyle' | theme}}" mdbTooltip="Edit Tourist Place Schedule" (click)="basicModal4.show()" placement="top"></i></h5>
-    </div>
-    <div class="divSchedule">
-      <div *ngIf="patchSchedule.haveSchedule">
-        <h7 *ngIf="patchSchedule.haveSchedule" class="letters"> Attention Days: </h7><br />
-        <h7 *ngIf="patchSchedule.monday" class="letters"> Monday </h7>
-        <h7 *ngIf="patchSchedule.tuesday" class="letters"> Tuesday </h7>
-        <h7 *ngIf="patchSchedule.wednesday" class="letters">  Wednesday</h7>
-        <h7 *ngIf="patchSchedule.thursday" class="letters"> Thursday </h7>
-        <h7 *ngIf="patchSchedule.friday" class="letters"> Friday </h7>
-        <h7 *ngIf="patchSchedule.saturday" class="letters"> Saturday </h7>
-        <h7 *ngIf="patchSchedule.sunday" class="letters"> Sunday </h7><br />
-        <h7 *ngIf="patchSchedule.haveSchedule" class="letters"> Attention Hours: </h7><br />
-        <h7 *ngIf="patchSchedule.haveSchedule" class="letters"> {{patchSchedule.selectedTimeStart}} - {{patchSchedule.selectedTimeEnd}}</h7>
-      </div>
-      <h6 id="h5" *ngIf="!patchSchedule.haveSchedule" class="letters red-text"><i class="fa fa-exclamation"></i>This site has not defined its visiting days and its hours of attention</h6>
-      <h5 *ngIf="!patchSchedule.haveSchedule" class="detail font-weight-bold mb-3">Schedule Tourist Place Information<i id="informationEdit" class="fa fa-plus fa-1x {{'iconPrimaryStyle' | theme}}" mdbTooltip="Add Tourist Place Schedule" (click)="basicModal4.show()" placement="top"></i></h5>
-    </div>
-    <div mdbModal #basicModal4="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
-         aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal4.hide()">
-              <span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title w-100" id="myModalLabel"><i class="fa fa-check-square"></i> Tourist Place Schedule </h4>
-          </div>
-          <div class="modal-body">
-            <h7 *ngIf="patchSchedule.haveSchedule" class="letters"> Attention Days: </h7><br />
-            <mat-checkbox class="monday" labelPosition="before" [(ngModel)]='patchSchedule.monday'> Monday </mat-checkbox>
-            <mat-checkbox class="tuesday" labelPosition="before" [(ngModel)]='patchSchedule.tuesday'> Tuesday </mat-checkbox>
-            <mat-checkbox class="wednesday" labelPosition="before" [(ngModel)]='patchSchedule.wednesday'> Wednesday </mat-checkbox>
-            <mat-checkbox class="thursday" labelPosition="before" [(ngModel)]='patchSchedule.thursday'> Thursday </mat-checkbox>
-            <mat-checkbox class="friday" labelPosition="before" [(ngModel)]='patchSchedule.friday'> Friday </mat-checkbox>
-            <mat-checkbox class="saturday" labelPosition="before" [(ngModel)]='patchSchedule.saturday'> Saturday </mat-checkbox>
-            <mat-checkbox class="sunday" labelPosition="before" [(ngModel)]='patchSchedule.sunday'> Sunday </mat-checkbox>
-            <div *ngIf="!this.patchSchedule.notConcurrencyCheckDays()" style="color:red;">
-              The attention days can't be empty.
-            </div>
-          </div>
-          <div>
-            <h7 *ngIf="patchSchedule.haveSchedule" class="letters"> Attention Hours: </h7><br />
-          </div>
-          <div class="modalsSt">
-            <form [formGroup]="startTimeForm">
-              <div class="md-form">
-                <i class="fa fa-calendar prefix {{'iconPrimaryStyle' | theme}}"></i>
-                <input *ngIf="!patchSchedule.haveSchedule" id="startT" formControlName="startTime" (ngModelChange)="openStart($event)" class="form-control" type="time" mdbInputDirective>
-                <input *ngIf="patchSchedule.haveSchedule" id="startT" formControlName="startTime" (ngModelChange)="openStart($event)" class="form-control" type="time" value={{patchSchedule.selectedTimeStart}} mdbInputDirective>
-                <label for="startT" class="font-weight-light">Start Time</label>
-              </div>
-            </form>
-          </div>
-          <div class="modalsEt">
-            <form [formGroup]="endTimeForm">
-              <div class="md-form">
-                <i class="fa fa-calendar prefix {{'iconPrimaryStyle' | theme}}"></i>
-                <input *ngIf="!patchSchedule.haveSchedule" id="endT" formControlName="endTime" (ngModelChange)="openEnd($event)" class="form-control" type="time" mdbInputDirective>
-                <input *ngIf="patchSchedule.haveSchedule" id="endT" formControlName="endTime" (ngModelChange)="openEnd($event)" class="form-control" type="time" value={{patchSchedule.selectedTimeEnd}} mdbInputDirective>
-                <label for="endT" class="font-weight-light">End Time</label>
-                <div *ngIf="validateHr" style="color:red;">
-                  Start time must not be greater than the end time.
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="siteLocationButton">
-            <button *ngIf="patchSchedule.haveSchedule" id="buttonSaveDays" type="button" mdbBtn color="cyan"
-            class="{{ 'buttonPrimaryStyle' | theme }}" (click)="patchScheduleLocation(basicModal4)" [disabled]="disabled()" mdbWavesEffect><i class="fa fa-check"></i>Save</button>
-            <button *ngIf="!patchSchedule.haveSchedule" id="buttonSaveDays" type="button" mdbBtn color="cyan"
-            class="{{ 'buttonPrimaryStyle' | theme }}" (click)="saveNewSchedule(basicModal4)" [disabled]="disabled()" mdbWavesEffect><i class="fa fa-check"></i>Save</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-        <button  mdbBtn color="cyan" class="{{ 'buttonPrimaryStyle' | theme }}" (click)="createSite()">Create Site</button>
-</div>
-
-<!-- <button mdbBtn type="button" id="buttons" mdbWavesEffect class="{{ 'buttonPrimaryStyle' | theme }}" [routerLink]="['/site-detail', siteId]"><mdb-icon icon="arrow-left" size="lg" class="mr-1"></mdb-icon> Go Back</button><br>
+<button mdbBtn type="button" id="buttons" mdbWavesEffect class="{{ 'buttonPrimaryStyle' | theme }}" [routerLink]="['/admin-page']"><mdb-icon icon="arrow-left" size="lg" class="mr-1"></mdb-icon> Go Back</button><br>
 <mdb-card class="form-create-event">
-  <div class=" nav-tabs tabs-3 elegant-color-dark ">
-    <h3 class="modal-title w-100  text-center" id="Event"><i class="fa fa-map-marker"></i> Edit Tourist Information </h3>
-  </div>
+    <div class=" nav-tabs tabs-3 elegant-color-dark ">
+        <h3 class="modal-title w-100  text-center" id="Event"><i class="fa fa-map-marker"></i> Create Tourist Place </h3>
+    </div>
 
-  <div class="modalsSite">
-    <div>
-      <h5 class=" detail font-weight-bold mb-3">Basic Tourist Place Information<i id="informationEdit" class="fa fa-pencil fa-1x {{'iconPrimaryStyle' | theme}}" mdbTooltip="Edit Tourist Place Information" (click)="basicModal1.show()" placement="top"></i></h5>
-    </div>
-    <div>
-      <h6 class="letters"> Name: {{ patchSiteInformation.nameSite }} </h6>
-      <h6 class="letters"> Description: {{ patchSiteInformation.descriptionSite }} </h6>
-    </div>
-    <div mdbModal #basicModal1="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
-         aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close pull-right" aria-label="Close"  (click)="basicModal1.hide()">
-              <span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title w-100" id="myModalLabel"><i class="fa fa-globe"></i> Edit Tourist Place Information</h4>
-          </div>
-          <form [formGroup]="cardForm">
-            <div class="modalsName">
-              <div class="md-form">
-                <i class="fa fa-user prefix {{'iconPrimaryStyle' | theme}}"></i>
-                <input type="text" #Name value="{{ patchSiteInformation.nameSite }}" formControlName="siteName" class="form-control" data-error="Invalid name" mdbInputDirective>
-                <label for="name" class="font-weight-light">Site Name</label>
-              </div>
-            </div>
-            <div class="modalsDescription">
-              <div class="md-form">
-                <i class="fa fa-pencil prefix {{'iconPrimaryStyle' | theme}}"></i>
-                <textarea mdbInputDirective type="text" formControlName="description" value="{{ patchSiteInformation.descriptionSite }}" #Desc class="md-textarea form-control" data-error="Invalid description" rows="1"></textarea>
-                <label for="form8">Description</label>
-              </div>
-            </div>
-          </form>
-          <div class="siteLocationButton">
-            <button type="button" id="informationButton" mdbBtn color="cyan" class="{{ 'buttonPrimaryStyle' | theme }}" (click)="configurePlace(basicModal1, Name.value, Desc.value)" [disabled]="disabledInfo(Name.value, Desc.value)" mdbWavesEffect><i class="fa fa-check"></i>Save</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modals">
-    <div class="imagediv">
-      <h5 class=" detail font-weight-bold mb-3">Image of the Tourist Place<i id="informationEdit" class="fa fa-pencil fa-1x {{'iconPrimaryStyle' | theme}}" mdbTooltip="Change Tourist Place Image" (click)="basicModal2.show()" placement="top"></i></h5>
-      <img class="rounded-circle" id="image" src="{{patchSiteInformation.imageUrl}}" alt="{{patchSiteInformation.nameSite}}">
-    </div>
-    <div mdbModal #basicModal2="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
-         aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal2.hide()">
-              <span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title w-100" id="myModalLabel"><i class="fa fa-camera"></i> Edit Tourist Place Image</h4>
-          </div>
-          <div class="modal-body">
-            <p class="letters">Select an Image of your computer:</p>
-            <app-upload-images [typeupload]="'event'" (saveImage)="onSubmit($event, basicModal2)"></app-upload-images>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modalsSite">
-    <div>
-      <h5 class=" detail font-weight-bold mb-3">Tourist Place Location<i id="informationEdit" class="fa fa-pencil fa-1x {{'iconPrimaryStyle' | theme}}" mdbTooltip="Change Tourist Place Location" (click)="basicModal3.show()" placement="top"></i></h5>
-    </div>
-    <div class="map">
-      <agm-map [latitude]="patchSiteInformation.lat" [longitude]="patchSiteInformation.lng" [zoom]="zoom" [zoomControl]="true" class="map">
-        <agm-marker [latitude]="patchSiteInformation.lat" [longitude]="patchSiteInformation.lng">
-          <agm-info-window>
-            <strong>{{patchSiteInformation.nameSite}}</strong>
-          </agm-info-window>
-        </agm-marker>
-      </agm-map>
-    </div>
-    <div mdbModal #basicModal3="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
-         aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal3.hide()">
-              <span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title w-100" id="myModalLabel"><i class="fa fa-globe"></i> Change Tourist Place Location</h4>
-          </div>
-          <div class="modal-body">
-            <agm-map [latitude]="patchSiteInformation.lat" [longitude]="patchSiteInformation.lng" (mapClick)="mapClicked($event)" [zoom]="zoom" [zoomControl]="true">
-              <agm-marker (markerClick)="clickedMarker()"
-                          [latitude]="patchSiteInformation.markedLat"
-                          [longitude]="patchSiteInformation.markedLng"
-                          [label]="label">
-              </agm-marker>
-            </agm-map>
-          </div>
-          <div class="siteLocationButton">
-            <button type="button" id="locationSaveButton" [disabled]="!isFree" mdbBtn color="cyan" class="{{ 'buttonPrimaryStyle' | theme }}" (click)="patchLocationCoordinates(basicModal3)" mdbWavesEffect><i class="fa fa-check"></i>Save</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modalsConcurrency">
-    <div>
-      <h5 *ngIf="patchSchedule.haveSchedule" class="detail font-weight-bold mb-3">Tourist Place Schedule<i id="informationEdit" class="fa fa-pencil fa-1x {{'iconPrimaryStyle' | theme}}" mdbTooltip="Edit Tourist Place Schedule" (click)="basicModal4.show()" placement="top"></i></h5>
-    </div>
-    <div class="divSchedule">
-      <div *ngIf="patchSchedule.haveSchedule">
-        <h7 *ngIf="patchSchedule.haveSchedule" class="letters"> Attention Days: </h7><br />
-        <h7 *ngIf="patchSchedule.monday" class="letters"> Monday </h7>
-        <h7 *ngIf="patchSchedule.tuesday" class="letters"> Tuesday </h7>
-        <h7 *ngIf="patchSchedule.wednesday" class="letters">  Wednesday</h7>
-        <h7 *ngIf="patchSchedule.thursday" class="letters"> Thursday </h7>
-        <h7 *ngIf="patchSchedule.friday" class="letters"> Friday </h7>
-        <h7 *ngIf="patchSchedule.saturday" class="letters"> Saturday </h7>
-        <h7 *ngIf="patchSchedule.sunday" class="letters"> Sunday </h7><br />
-        <h7 *ngIf="patchSchedule.haveSchedule" class="letters"> Attention Hours: </h7><br />
-        <h7 *ngIf="patchSchedule.haveSchedule" class="letters"> {{patchSchedule.selectedTimeStart}} - {{patchSchedule.selectedTimeEnd}}</h7>
-      </div>
-      <h6 id="h5" *ngIf="!patchSchedule.haveSchedule" class="letters red-text"><i class="fa fa-exclamation"></i>This site has not defined its visiting days and its hours of attention</h6>
-      <h5 *ngIf="!patchSchedule.haveSchedule" class="detail font-weight-bold mb-3">Schedule Tourist Place Information<i id="informationEdit" class="fa fa-plus fa-1x {{'iconPrimaryStyle' | theme}}" mdbTooltip="Add Tourist Place Schedule" (click)="basicModal4.show()" placement="top"></i></h5>
-    </div>
-    <div mdbModal #basicModal4="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
-         aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal4.hide()">
-              <span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title w-100" id="myModalLabel"><i class="fa fa-check-square"></i> Tourist Place Schedule </h4>
-          </div>
-          <div class="modal-body">
-            <h7 *ngIf="patchSchedule.haveSchedule" class="letters"> Attention Days: </h7><br />
-            <mat-checkbox class="monday" labelPosition="before" [(ngModel)]='patchSchedule.monday'> Monday </mat-checkbox>
-            <mat-checkbox class="tuesday" labelPosition="before" [(ngModel)]='patchSchedule.tuesday'> Tuesday </mat-checkbox>
-            <mat-checkbox class="wednesday" labelPosition="before" [(ngModel)]='patchSchedule.wednesday'> Wednesday </mat-checkbox>
-            <mat-checkbox class="thursday" labelPosition="before" [(ngModel)]='patchSchedule.thursday'> Thursday </mat-checkbox>
-            <mat-checkbox class="friday" labelPosition="before" [(ngModel)]='patchSchedule.friday'> Friday </mat-checkbox>
-            <mat-checkbox class="saturday" labelPosition="before" [(ngModel)]='patchSchedule.saturday'> Saturday </mat-checkbox>
-            <mat-checkbox class="sunday" labelPosition="before" [(ngModel)]='patchSchedule.sunday'> Sunday </mat-checkbox>
-            <div *ngIf="!this.patchSchedule.notConcurrencyCheckDays()" style="color:red;">
-              The attention days can't be empty.
+  <div id="createsite">
+      <form [formGroup]="cardForm">
+          <div class="modals">
+            <div class="md-form">
+              <i class="fa fa-user prefix"></i>
+              <input type="text" id="name" formControlName="eventName" [(ngModel)]="label" class="form-control" data-error="Invalid name" mdbInputDirective>
+              <label for="name" class="font-weight-light">Site Name</label>
             </div>
           </div>
-          <div>
-            <h7 *ngIf="patchSchedule.haveSchedule" class="letters"> Attention Hours: </h7><br />
+          <div class="modals">
+            <div class="md-form">
+              <i class="fa fa-pencil prefix"></i>
+              <textarea mdbInputDirective type="text" formControlName="description" [(ngModel)]="descritionSite" id="form8" class="md-textarea form-control" data-error="Invalid description" rows="1"></textarea>
+              <label for="form8">Description</label>
+            </div>
           </div>
-          <div class="modalsSt">
-            <form [formGroup]="startTimeForm">
-              <div class="md-form">
-                <i class="fa fa-calendar prefix {{'iconPrimaryStyle' | theme}}"></i>
-                <input *ngIf="!patchSchedule.haveSchedule" id="startT" formControlName="startTime" (ngModelChange)="openStart($event)" class="form-control" type="time" mdbInputDirective>
-                <input *ngIf="patchSchedule.haveSchedule" id="startT" formControlName="startTime" (ngModelChange)="openStart($event)" class="form-control" type="time" value={{patchSchedule.selectedTimeStart}} mdbInputDirective>
-                <label for="startT" class="font-weight-light">Start Time</label>
-              </div>
-            </form>
-          </div>
-          <div class="modalsEt">
-            <form [formGroup]="endTimeForm">
-              <div class="md-form">
-                <i class="fa fa-calendar prefix {{'iconPrimaryStyle' | theme}}"></i>
-                <input *ngIf="!patchSchedule.haveSchedule" id="endT" formControlName="endTime" (ngModelChange)="openEnd($event)" class="form-control" type="time" mdbInputDirective>
-                <input *ngIf="patchSchedule.haveSchedule" id="endT" formControlName="endTime" (ngModelChange)="openEnd($event)" class="form-control" type="time" value={{patchSchedule.selectedTimeEnd}} mdbInputDirective>
-                <label for="endT" class="font-weight-light">End Time</label>
-                <div *ngIf="validateHr" style="color:red;">
-                  Start time must not be greater than the end time.
+
+          <div class="modals">
+              <h5 class=" detail font-weight-bold mb-3" style="margin-left:2%">Image of the Tourist Place<i id="informationEdit" class="fa fa-pencil fa-1x {{'iconPrimaryStyle' | theme}}" mdbTooltip="Change Tourist Place Image" (click)="basicModal1.show()" placement="top"></i></h5>
+              <div mdbModal #basicModal1="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal1.hide()">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                      <h4 class="modal-title w-100" id="myModalLabel1"><i class="fa fa-camera"></i> Add Image for Event</h4>
+                    </div>
+                    <div class="modal-body">
+                      <p class="letters">Select an Image of your computer:</p>
+                      <app-upload-images [typeupload]="'event'" (saveImage)="onSubmit($event, basicModal1)"></app-upload-images>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </form>
+            </div>
+          
+            <div *ngIf="imageUrl">
+              <img (click)="basicModal1.show()" class="rounded-circle" id="image" src="{{imageUrl}}" alt="{{siteName}}">
+            </div>
+            
+          <div class="modals">
+            <div class="md-form">
+              <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="mapClicked($event)" [zoomControl]="true">
+                <agm-marker (markerClick)="clickedMarker()"
+                            [latitude]="markedLat"
+                            [longitude]="markedLng"
+                            [label]="label"></agm-marker>
+              </agm-map>
+              <div *ngIf="!this.markedLat || !this.markedLng" class="letters red-text">
+                <i class="fa fa-exclamation"></i>
+                Tourist place must have a location assigned.
+              </div>
+            </div>
           </div>
-          <div class="siteLocationButton">
-            <button *ngIf="patchSchedule.haveSchedule" id="buttonSaveDays" type="button" mdbBtn color="cyan"
-            class="{{ 'buttonPrimaryStyle' | theme }}" (click)="patchScheduleLocation(basicModal4)" [disabled]="disabled()" mdbWavesEffect><i class="fa fa-check"></i>Save</button>
-            <button *ngIf="!patchSchedule.haveSchedule" id="buttonSaveDays" type="button" mdbBtn color="cyan"
-            class="{{ 'buttonPrimaryStyle' | theme }}" (click)="saveNewSchedule(basicModal4)" [disabled]="disabled()" mdbWavesEffect><i class="fa fa-check"></i>Save</button>
+        </form>
+
+    <div class="modalsConcurrency">
+      <div>
+        <h5 *ngIf="patchSchedule.haveSchedule" class="detail font-weight-bold mb-3">Tourist Place Schedule<i id="informationEdit" class="fa fa-pencil fa-1x {{'iconPrimaryStyle' | theme}}" mdbTooltip="Edit Tourist Place Schedule" (click)="basicModal4.show()" placement="top"></i></h5>
+      </div>
+      <div class="divSchedule">
+        <div *ngIf="patchSchedule.haveSchedule">
+          <h7 *ngIf="patchSchedule.haveSchedule" class="letters"> Attention Days: </h7><br />
+          <h7 *ngIf="patchSchedule.monday" class="letters"> Monday </h7>
+          <h7 *ngIf="patchSchedule.tuesday" class="letters"> Tuesday </h7>
+          <h7 *ngIf="patchSchedule.wednesday" class="letters">  Wednesday</h7>
+          <h7 *ngIf="patchSchedule.thursday" class="letters"> Thursday </h7>
+          <h7 *ngIf="patchSchedule.friday" class="letters"> Friday </h7>
+          <h7 *ngIf="patchSchedule.saturday" class="letters"> Saturday </h7>
+          <h7 *ngIf="patchSchedule.sunday" class="letters"> Sunday </h7><br />
+          <h7 *ngIf="patchSchedule.haveSchedule" class="letters"> Attention Hours: </h7><br />
+          <h7 *ngIf="patchSchedule.haveSchedule" class="letters"> {{patchSchedule.selectedTimeStart}} - {{patchSchedule.selectedTimeEnd}}</h7>
+        </div>
+        <h6 id="h5" *ngIf="!patchSchedule.haveSchedule" class="letters blue-text"><i class="fa fa-exclamation"></i>This site has not defined its visiting days and its hours of attention</h6>
+        <h5 *ngIf="!patchSchedule.haveSchedule" class="detail font-weight-bold mb-3">Schedule Tourist Place Information<i id="informationEdit" class="fa fa-plus fa-1x {{'iconPrimaryStyle' | theme}}" mdbTooltip="Add Tourist Place Schedule" (click)="basicModal4.show()" placement="top"></i></h5>
+      </div>
+      <div mdbModal #basicModal4="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+          aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title w-100" id="myModalLabel"><i class="fa fa-check-square"></i> Tourist Place Schedule </h4>
+            </div>
+            <div class="modal-body">
+              <h7 *ngIf="patchSchedule.haveSchedule" class="letters"> Attention Days: </h7><br />
+              <mat-checkbox class="monday" labelPosition="before" [(ngModel)]='patchSchedule.monday'> Monday </mat-checkbox>
+              <mat-checkbox class="tuesday" labelPosition="before" [(ngModel)]='patchSchedule.tuesday'> Tuesday </mat-checkbox>
+              <mat-checkbox class="wednesday" labelPosition="before" [(ngModel)]='patchSchedule.wednesday'> Wednesday </mat-checkbox>
+              <mat-checkbox class="thursday" labelPosition="before" [(ngModel)]='patchSchedule.thursday'> Thursday </mat-checkbox>
+              <mat-checkbox class="friday" labelPosition="before" [(ngModel)]='patchSchedule.friday'> Friday </mat-checkbox>
+              <mat-checkbox class="saturday" labelPosition="before" [(ngModel)]='patchSchedule.saturday'> Saturday </mat-checkbox>
+              <mat-checkbox class="sunday" labelPosition="before" [(ngModel)]='patchSchedule.sunday'> Sunday </mat-checkbox>
+              <div *ngIf="!this.patchSchedule.notConcurrencyCheckDays()" style="color:red;">
+                The attention days can't be empty.
+              </div>
+            </div>
+            <div>
+              <h7 *ngIf="patchSchedule.haveSchedule" class="letters"> Attention Hours: </h7><br />
+            </div>
+            <div class="modalsSt">
+              <form [formGroup]="startTimeForm">
+                <div class="md-form">
+                  <i class="fa fa-calendar prefix {{'iconPrimaryStyle' | theme}}"></i>
+                  <input *ngIf="!patchSchedule.haveSchedule" id="startT" formControlName="startTime" (ngModelChange)="openStart($event)" class="form-control" type="time" mdbInputDirective>
+                  <input *ngIf="patchSchedule.haveSchedule" id="startT" formControlName="startTime" (ngModelChange)="openStart($event)" class="form-control" type="time" value="{{patchSchedule.selectedTimeStart}}" mdbInputDirective>
+                  <label for="startT" class="font-weight-light">Start Time</label>
+                </div>
+              </form>
+            </div>
+            <div class="modalsEt">
+              <form [formGroup]="endTimeForm">
+                <div class="md-form">
+                  <i class="fa fa-calendar prefix {{'iconPrimaryStyle' | theme}}"></i>
+                  <input *ngIf="!patchSchedule.haveSchedule" id="endT" formControlName="endTime" (ngModelChange)="openEnd($event)" class="form-control" type="time" mdbInputDirective>
+                  <input *ngIf="patchSchedule.haveSchedule" id="endT" formControlName="endTime" (ngModelChange)="openEnd($event)" class="form-control" type="time" value="{{patchSchedule.selectedTimeEnd}}" mdbInputDirective>
+                  <label for="endT" class="font-weight-light">End Time</label>
+                  <br><div *ngIf="validateHr" style="color:red;">
+                    Start time must not be greater than the end time.
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="siteLocationButton">
+              <button id="buttonSaveDays" type="button" mdbBtn color="cyan" class="{{ 'buttonPrimaryStyle' | theme }}" 
+              (click)="saveNewSchedule(basicModal4)" [disabled]="disabled()" mdbWavesEffect><i class="fa fa-check"></i>Accept</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
+          <div class="button">
+            <button [disabled]="disabledCreate()" mdbBtn color="cyan" class="{{ 'buttonPrimaryStyle' | theme }}" (click)="createSite()">Create Site</button>
+          </div>
   </div>
-
-  <div class="button">
-    <button type="button" mdbBtn color="cyan" class="{{ 'buttonPrimaryStyle' | theme }}" [routerLink]="['/site-detail', siteId]" mdbWavesEffect><i class="fa fa-times"></i> Close </button>
-  </div>
-
 </mdb-card>
-<app-dialog></app-dialog> -->
+<app-dialog></app-dialog>

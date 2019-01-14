@@ -12,6 +12,8 @@ import { ScheduleSiteService } from 'src/app/services/schedule-site-service.serv
 import { IPatch } from 'src/app/models/patch.model';
 import { CreateSchedulelocation } from '../edit-site/create-schedule';
 import {PatchSite} from '../edit-site/patch-site';
+import { IDialog, TypeOfDialog, IconOfDialog } from '../../../common/dialog/dialog.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-site',
@@ -45,17 +47,22 @@ export class CreateSiteComponent implements OnInit {
   readySite: boolean = false;
   nameImage: string;
   imageId: number;
+  imageUrl: any = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgFJlk854udBnB_dtaHnsX7UJn-Zp2ep8vDIef_KAmcKN63bV6";
   image: boolean = false;
   patchSchedule: PatchScheduleSite;
   patchSiteInformation: PatchSite;
   validateHr: boolean = false;
   addSchedule: any;
   modal: any;
+  dialogServ: DialogService;
   @Output('saveSite') saveSite: EventEmitter<Object> = new EventEmitter<Object>();
-  // tslint:disable-next-line:max-line-length
+  
   constructor(private siteServices: SiteService, private fb: FormBuilder, private images: ImageService, private dialogService: DialogService
-              , private scheduleService: ScheduleSiteService) { }
-  public createSite() {
+              , private scheduleService: ScheduleSiteService, private router: Router) { 
+                this.dialogServ = dialogService;
+              }
+
+  createSite(){
     if (this.image == false) {
       let image: Image = {
         name: "ImageEventDefault",
@@ -64,8 +71,13 @@ export class CreateSiteComponent implements OnInit {
       }
       this.images.addImage(image).subscribe(response => {
         this.imageId = response['imageId'];
+        this.postSite();
       });
     }
+    this.postSite();
+  }
+    
+  public postSite() {
     let site: Site = {
       name: this.label,
       description: this.descritionSite,
@@ -73,14 +85,24 @@ export class CreateSiteComponent implements OnInit {
       longitude: this.markedLng,
       imageId: this.imageId
     }
-    console.log('site', site);
     this.siteServices.postSite(site).subscribe( response => {
       this.site = 'The Site was successfully uploaded, Site name: ' + this.label;
       this.siteId = response['siteId'];
-      this.addSchedule.createSchedule(this.patchSchedule, this.siteId, this.modal);
+      if(this.patchSchedule.haveSchedule){
+        this.addSchedule.createScheduleNew(this.patchSchedule, this.siteId, this.modal);
+      }
+      else{
+        this.addSchedule = new CreateSchedulelocation(this.scheduleService, this.dialogService, this.router);
+        this.patchSchedule.selectedTimeStart = "00:00:00";
+        this.patchSchedule.selectedTimeEnd = "00:00:00";
+        this.addSchedule.createScheduleNew(this.patchSchedule, this.siteId, this.modal);
+      }
       this.siteName = this.label;
       this.saveSite.emit(response);
       this.readySite = true;
+      setTimeout( function (){
+      },2000);
+      this.router.navigate(['/site-detail/' + this.siteId]);
     }, error => {
       this.site = 'The site could not uploaded';
     });
@@ -124,6 +146,7 @@ export class CreateSiteComponent implements OnInit {
   }
   onSubmit(imageForm, bM1): void {
     this.imageId = imageForm.imageId;
+    this.imageUrl = imageForm.urlImage;
     bM1.hide();
     this.nameImage = imageForm.name;
     this.image = true;
@@ -138,12 +161,15 @@ export class CreateSiteComponent implements OnInit {
     this.isCompleteEd = true;
   }
   validHour(){
-    var startTime = Date.parse('01/01/2011 '+ this.patchSchedule.selectedTimeStart);
-    var endTime = Date.parse('01/01/2011 '+ this.patchSchedule.selectedTimeEnd);
-    if (startTime > endTime){
+    if(!this.patchSchedule.selectedTimeStart || !this.patchSchedule.selectedTimeEnd){
       return true;
     }
-    return false;
+    var startTime = Date.parse('01/01/2011 '+ this.patchSchedule.selectedTimeStart);
+    var endTime = Date.parse('01/01/2011 '+ this.patchSchedule.selectedTimeEnd);
+    if (startTime >= endTime){
+      return true;
+    }
+  return false
   }
   disabledInfo(name, desc){
     if(!/([0-9A-Z][a-z0-9]*[.]?[ ]?)+/.test(name) || !/([A-Za-z0-9]+[ ]{0,1250})+/.test(desc)){
@@ -156,11 +182,14 @@ export class CreateSiteComponent implements OnInit {
   }
 
   public saveNewSchedule(modal) {
+    let dialog: IDialog;
     console.log("saving schedule");
     this.modal = modal;
-    this.addSchedule = new CreateSchedulelocation(this.scheduleService, this.dialogService);
-    // addSchedule.createSchedule(this.patchSchedule, this.siteId, modal);
+    this.modal.hide();
+    this.addSchedule = new CreateSchedulelocation(this.scheduleService, this.dialogService, this.router);
+    this.patchSchedule.haveSchedule = true;
   }
+
   disabled(){
     var dis = this.validHour();
     this.validateHr = dis;
@@ -168,5 +197,12 @@ export class CreateSiteComponent implements OnInit {
       return true;
     }
     return dis;
+  }
+
+  disabledCreate(){
+    if( this.label && this.descritionSite && this.markedLat && this.markedLng){
+      return false;
+    }
+    return true;
   }
 }

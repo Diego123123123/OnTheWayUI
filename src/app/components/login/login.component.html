@@ -28,18 +28,18 @@
       <div class="text-center mt-2">
         <button mdbBtn class="{{ 'buttonPrimaryStyle' | theme}}" type="submit" mdbWavesEffect [disabled]="!loginForm.valid">
             Log in
-            <i class="fa fa-sign-in ml-1"></i>
+            <i class="fa fa-sign-in ml-1"></i> 
         </button>
       </div>
       <!--Footer-->
-    </form>
+    </form>              
             <div class="modal-footer display-footer">
                 <div class="options text-center text-md-right mt-1">
                     <p>Not a member?
                         <a routerLink="/user-register-form" class="blue-text">Sign Up</a>
                     </p>
                 </div>
-
+                                            
                 <button type="button"  routerLink="/" mdbBtn class="{{ 'buttonSecondaryStyle' | theme}}" data-dismiss="modal" mdbWavesEffect>Cancel</button>
             </div>
     </mdb-card-body>

@@ -1,15 +1,50 @@
 import { IConcurrency } from '../../../models/concurrency-site.model';
 import { DialogService } from '../../../common/dialog/dialog.service';
 import { IDialog, TypeOfDialog, IconOfDialog } from '../../../common/dialog/dialog.model';
+import { Router } from '@angular/router';
 
 export class CreateSchedulelocation {
 
   schedulesiteService: any;
   dialogService: DialogService;
+  router: any;
+  siteId: any;
 
-  constructor(schedulesiteService, dialogService) {
+  constructor(schedulesiteService, dialogService, router) {
     this.schedulesiteService = schedulesiteService
     this.dialogService = dialogService;
+    this.router = router;
+  }
+
+  public createNewPlace(siteId){
+
+  }
+
+  public createScheduleNew(schedule, siteId, modal){
+    let createNotebook: IConcurrency = {
+      monday: schedule.monday,
+      tuesday: schedule.tuesday,
+      wednesday: schedule.wednesday,
+      thursday: schedule.thursday,
+      friday: schedule.friday,
+      saturday: schedule.saturday,
+      sunday: schedule.sunday,
+      startDate: schedule.selectedTimeStart,
+      finishDate: schedule.selectedTimeEnd
+    };
+    this.schedulesiteService.postScheduleSite(siteId, createNotebook).subscribe(response => {
+      this.siteId = siteId;
+      let dialog: IDialog;
+      dialog = {
+        title: 'Successful',
+        description: 'Tourist place added successfully',
+        btnNo: 'Accept',
+        type: TypeOfDialog.SUCCESS,
+        icon: IconOfDialog.SUCCESS,
+        ignoreBackdrop: true
+      };
+      this.dialogService.options(dialog);
+    });
   }
 
   public createSchedule(schedule, siteId, modal) {

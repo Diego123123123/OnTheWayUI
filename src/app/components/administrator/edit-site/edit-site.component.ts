@@ -5,7 +5,7 @@ import { ElementRef } from '@angular/core';
 import { MouseEvent } from '@agm/core';
 import { Image } from '../../../models/image';
 import { IPatch } from '../../../models/patch.model';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AppError } from '../../../common/errors/app-error';
 import { Scheduler } from 'rxjs/internal/Scheduler';
 import { PatchSite } from '../edit-site/patch-site';
@@ -45,7 +45,7 @@ export class EditSiteComponent implements OnInit {
   validateHr: boolean = false;
   
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private dialogService: DialogService,
-    private siteService: SiteService, private scheduleService: ScheduleSiteService) {
+    private siteService: SiteService, private scheduleService: ScheduleSiteService, private router: Router) {
   }
 
   disabledInfo(name, desc){
@@ -66,7 +66,7 @@ export class EditSiteComponent implements OnInit {
   validHour(){
     var startTime = Date.parse('01/01/2011 '+ this.patchSchedule.selectedTimeStart);
     var endTime = Date.parse('01/01/2011 '+ this.patchSchedule.selectedTimeEnd);
-    if (startTime > endTime){
+    if (startTime >= endTime){
       return true;
     }
     return false;
@@ -141,7 +141,7 @@ export class EditSiteComponent implements OnInit {
   }
 
   public saveNewSchedule(modal) {
-    var addSchedule = new CreateSchedulelocation(this.scheduleService, this.dialogService);
+    var addSchedule = new CreateSchedulelocation(this.scheduleService, this.dialogService, this.router);
     addSchedule.createSchedule(this.patchSchedule, this.siteId, modal);
   }
 }

@@ -13,8 +13,8 @@ export class PatchScheduleSite {
   friday: boolean;
   saturday: boolean;
   sunday: boolean;
-  selectedTimeStart: any = "00:00:00";
-  selectedTimeEnd: any = "23:59:00";
+  selectedTimeStart: any;
+  selectedTimeEnd: any;
   schedule: any;
   siteId: any;
   haveSchedule = false;
