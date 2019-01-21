@@ -63,7 +63,6 @@ export class CreateQrcodeComponent implements OnInit {
             this.priceTicket = priceResp;
             if(data['imageId'] == 0){
               this.captureScreen();
-              this.upload();
             }
           });
         });
@@ -79,6 +78,7 @@ export class CreateQrcodeComponent implements OnInit {
       img.src = dataUrl;
       sessionStorage.setItem('dataSrc', dataUrl);
     })
+    this.upload();
   }
 
   public upload () { 
@@ -121,9 +121,6 @@ export class CreateQrcodeComponent implements OnInit {
     }
   
     dataURLtoFile(filename) {
-      while(!sessionStorage.getItem('dataSrc')){
-        this.captureScreen();
-      }
       var dataurl = sessionStorage.getItem('dataSrc'); 
       var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
           bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
