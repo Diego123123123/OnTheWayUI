@@ -69,6 +69,13 @@ export class CreateScheduleComponent implements OnInit {
   }
 
   validHourForm(){
+    var from_time = this.selectedTimeStart;
+    var from = Date.parse('01/01/2011 '+ from_time);
+    var to = Date.parse('01/01/2011 01:00');
+
+    if (from < to){
+      return true;
+    } 
     var validate = this.selectedTimeStart.split(':');
     var validateEnd = this.selectedTimeEnd.split(':');
     var dis = this.validHour();

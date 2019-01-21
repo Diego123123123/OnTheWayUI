@@ -1,0 +1,116 @@
+.form-customer {
+    width: 70%;
+    height: 80%;
+    margin: 5% 15%;
+    margin-top: 35%;
+}
+
+
+@mixin center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  
+  /*--------------------
+  Body
+  ---------------------*/
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  
+  
+  /*--------------------
+  Shop Card
+  ---------------------*/
+  .shop-card {
+    width: 100%;
+    background: #f5f5f5;
+    box-shadow: 0 10px 20px rgba(0,0,0,.3);
+    overflow: hidden;
+    border-radius: 5px;
+    padding: 17px;
+    text-align: center;
+    z-index: 2;
+  
+    .title {
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 25px;
+      color: #23211f;
+      margin-bottom: 5px;
+    }
+  
+    .desc {
+      font-size: 17px;
+      margin-bottom: 3px;
+    }
+     
+    .code{
+        position: absolute;
+        margin-top: 15%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .rounded-circle {
+        text-align: center;
+        height: 140px;
+        width: 140px;
+        border: groove;
+    }
+  
+    .cta {
+      padding: 20px 20px 5px;
+      margin-top: 40%;
+  
+      &::after {
+        content: '';
+        display: table;
+        clear: both;
+      }
+    }
+  
+    .price {
+      float: left;
+      color: black;
+      font-size: 15px;
+      font-weight: 700;
+      padding-top: 2px;
+      transition: color .3s ease-in-out;
+      margin-top: 1%;
+    }
+
+    .btn {
+        position: relative;
+        margin-top: 5%;
+        z-index: 1;
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: black;
+        padding: 10px 15px;
+        cursor: pointer;
+        transition: all .3s ease-in-out;
+        line-height: .95;
+        border: none;
+        background: none;
+        outline: none;
+        border: 1px solid black;
+        border-radius: 20px;
+        overflow: hidden;
+        float: right;
+
+        
+        &:hover {
+          color: black!important;
+          border: 1px solid transparent!important;
+        }
+    }
+  }
+
+

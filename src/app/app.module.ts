@@ -101,6 +101,10 @@ import { HeaderComponent } from './components/general/header/header.component';
 import { DeniedPageComponent } from './components/general/denied-page/denied-page.component';
 import { NotExistEventsComponent } from './components/not-exist-events/not-exist-events.component';
 import { EventsByCategoryComponent } from './components/events-by-category/events-by-category.component';
+import { CreateQrcodeComponent } from './components/administrator/create-qrcode/create-qrcode.component';
+import { QRCodeModule } from 'angularx-qrcode';
+import { DeletedEventsComponent } from './components/administrator/deleted-events/deleted-events.component';
+import { ValidateTicketComponent } from './components/administrator/create-qrcode/validate-ticket/validate-ticket.component';
 
 @Injectable()
 
@@ -154,6 +158,9 @@ import { EventsByCategoryComponent } from './components/events-by-category/event
     DeniedPageComponent,
     NotExistEventsComponent,
     EventsByCategoryComponent,
+    CreateQrcodeComponent,
+    DeletedEventsComponent,
+    ValidateTicketComponent,
   ],
   imports: [
     BrowserModule,
@@ -178,7 +185,8 @@ import { EventsByCategoryComponent } from './components/events-by-category/event
     CalendarModule.forRoot(),
     NgbModule,
     BlobModule.forRoot(),
-    PipeModule
+    PipeModule,
+    QRCodeModule
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [

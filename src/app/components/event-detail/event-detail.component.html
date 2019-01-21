@@ -35,16 +35,20 @@
 
       <div class="eventDetail">
         <div *ngIf="isAdmin || havePrices" class="price">
-          <h5 class="detail font-weight-bold"><i class="fa fa-money fa-2x green-text" id="price" mdbTooltip="Click to see the prices for the event" placement="top" (click)="showPrices()"></i>Price</h5>
+          <h5 class="detail font-weight-bold"><i class="fa fa-money fa-2x green-text" id="price"
+            mdbTooltip="Click to see the prices for the event" placement="top" (click)="showPrices()"></i>Price</h5>
         </div>
         <div *ngIf="!isAdmin && !havePrices" class="dateHelp">
-          <h5 class="detail font-weight-bold"><i class="fa fa-calendar-o fa-2x {{'iconPrimaryStyle' | theme}}" id="date" aria-hidden="true" [routerLink]="['/calendar/event', eventId]"></i>Dates</h5>
+          <h5 class="detail font-weight-bold"><i class="fa fa-calendar-o fa-2x {{'iconPrimaryStyle' | theme}}"
+            id="date" aria-hidden="true" [routerLink]="['/calendar/event', eventId]"></i>Dates</h5>
         </div>
         <div *ngIf="isAdmin || havePrices" class="date">
-          <h5 class="detail font-weight-bold"><i class="fa fa-calendar-o fa-2x {{'iconPrimaryStyle' | theme}}" id="date" aria-hidden="true" [routerLink]="['/calendar/event', eventId]"></i>Dates</h5>
+          <h5 class="detail font-weight-bold"><i class="fa fa-calendar-o fa-2x {{'iconPrimaryStyle' | theme}}"
+            id="date" aria-hidden="true" [routerLink]="['/calendar/event', eventId]"></i>Dates</h5>
         </div>
         <div class="place">
-          <h5 class="detail font-weight-bold"><i class="fa fa-map-marker fa-2x {{'iconPrimaryStyle' | theme}}" id="place" mdbTooltip="click to see map" placement="top" (click)="showMap()"></i>Place</h5>
+          <h5 class="detail font-weight-bold"><i class="fa fa-map-marker fa-2x {{'iconPrimaryStyle' | theme}}"
+            id="place" mdbTooltip="click to see map" placement="top" (click)="showMap()"></i>Place</h5>
         </div>
       </div>
         <!-- Grid row -->
@@ -52,7 +56,8 @@
         <p class="detail grey-text mb-3">Location: {{event.nameSite}}</p>
         <p class="detail grey-text">Date: {{event.startDate | date : 'fullDate'}} to {{event.finishDate | date : 'fullDate'}}</p>
       </div>                            
-    </div>        
+    </div>
+
   </section>
   <!-- Projects section v.3 -->
 <app-map-dialog></app-map-dialog>

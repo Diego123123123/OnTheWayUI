@@ -1,0 +1,21 @@
+<mdb-card class="form-customer">
+    <div class=" nav-tabs tabs-3" style="background-color:black;color:aliceblue"(click)="captureScreen()">
+        <h3 class="modal-title w-100  text-center" id="Event"> Serial: {{ticket.ticketId}}  </h3>
+    </div>
+  <div class="shop-card" id="contentToConvert">
+      <div class="title">
+        <Strong> {{priceTicket.nameSiteInEvent}} </Strong>
+      </div><br>
+      <div class="code">
+          <img class="rounded-circle" src={{event.imageUrl}} alt="">
+      </div>
+      <div class="cta">
+        <div class="price">
+          <i class="fa fa-user"></i> {{ticket.customerName}} <br>
+          <i class="fa fa-calendar-check-o"></i> {{event.name}}
+        </div>
+        <button class="btn" (click)="changeState()">{{getState()}}<span class="bg"></span></button>
+      </div>
+    
+  </div>
+</mdb-card>

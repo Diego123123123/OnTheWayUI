@@ -1,5 +1,9 @@
 <button mdbBtn type="button" *ngIf="isSuperAdmin" id="button" mdbWavesEffect class="{{ 'buttonPrimaryStyle' | theme }}" routerLink="/create-admin"><mdb-icon icon="user-plus" size="lg" class="mr-1"></mdb-icon> Create Administrator</button>
 <button mdbBtn type="button" id="buttons" mdbWavesEffect class="{{ 'buttonPrimaryStyle' | theme }}" routerLink="/create-event"><mdb-icon icon="plus-square" size="lg" class="mr-1"></mdb-icon> Create Event</button>
 <button mdbBtn type="button" id="button" mdbWavesEffect class="{{ 'buttonPrimaryStyle' | theme }}" routerLink="/create-site"><mdb-icon icon="plus-square" size="lg" class="mr-1"></mdb-icon> Create Site</button>
+<button mdbBtn id="buttons" title="Deleted events" type="button" class="btn btn-danger btn-circle" routerLink="/deleted-events">
+  <mdb-icon icon="trash" size="lg" class="mr-1"></mdb-icon>
+</button>
 <br>
-<app-admin-events></app-admin-events>
+<br>
+<app-admin-events [showDeleted]="showDeletedEvents" [showRecent]="showRecentEvents"></app-admin-events>

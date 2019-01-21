@@ -10,7 +10,7 @@ import { IParams } from '../models/params.model';
 export class AdminEventsService extends OnTheWayService{
 
   constructor(private http: HttpClient ) {
-    super("events", http);
+    super("admininevents", http);
   }
 
   public getEvents(params?: Array<IParams>){
@@ -23,6 +23,7 @@ export class AdminEventsService extends OnTheWayService{
     });
     return this.getAll(_params);
   }
+
   public deleteEvent(identifier: number) {
     return this.delete(identifier);
   }

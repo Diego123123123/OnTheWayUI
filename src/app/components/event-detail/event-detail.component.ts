@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { Event, ISingleEvent } from '../../models/event';
 import { IEvent } from '../../models/event.model';
 import { IPatch } from '../../models/patch.model';
@@ -15,15 +15,15 @@ import { MapDialogService } from '../../common/map-dialog/map-dialog.service';
 import { PriceServiceDialogService } from '../../common/price-table/price-table.component.service';
 import { AlertService } from 'src/app/common/alert/alert.service';
 import { IAlert, IconOfAlert, ColorOfAlert } from 'src/app/common/alert/alerts.model';
-
+import { FormsModule} from '@angular/forms';
+declare let paypal: any;
 @Component({
   selector: 'app-event-detail',
   templateUrl: './event-detail.component.html',
   styleUrls: ['./event-detail.component.scss']
 })
 export class EventDetailComponent implements OnInit {
-  
-  private event : any;
+  private event : any = {};
   private prices: Array<any>;
   private eventId: String;
   private namePlace: string;
@@ -35,13 +35,14 @@ export class EventDetailComponent implements OnInit {
   private priceDialog: IPriceDialog;
   favorite: boolean = false;
 
+
   constructor(private route: ActivatedRoute, private eventService: EventDetailService, private messageService: MessageService,
     private priceService: PriceService, private preferredEventService: PreferredEventsService, private dialogService: DialogService,
     private mapService: MapDialogService, private priceDialogService: PriceServiceDialogService, private alertService: AlertService) {
+      this.eventId = this.route.snapshot.paramMap.get('eventId');
     }
 
   ngOnInit() {
-    this.eventId = this.route.snapshot.paramMap.get('eventId');
     this.eventService.getEventDetail(Number(this.eventId)).subscribe(response => {
       this.event = response;
       this.prices = response['prices'];

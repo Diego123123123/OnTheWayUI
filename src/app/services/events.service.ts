@@ -31,4 +31,7 @@ export class EventsService extends OnTheWayService {
   public getCommentByEvent(id: number){
     return this.getOne(`${id}/comments`);
   }
+  public deleteEvent(id:number){
+    return this.delete(id);
+  }
 }

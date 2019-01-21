@@ -81,7 +81,7 @@ export class CreateEventComponent implements OnInit {
     this.site = true;
   }
 
-  onSubmitSchedule(schedule){
+  onSubmitSchedule(schedule) {
     this.scheduleId = schedule.id;
     this.dateStartShow = schedule.dateStartShow;
     this.dateEndShow = schedule.dateEndShow;

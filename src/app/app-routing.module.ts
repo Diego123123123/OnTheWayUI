@@ -30,17 +30,20 @@ import { PageNotFoundComponent } from './components/general/page-not-found/page-
 import { DeniedPageComponent } from './components/general/denied-page/denied-page.component';
 import { CreateSiteComponent } from './components/administrator/create-site/create-site.component';
 import { EventsByCategoryComponent } from './components/events-by-category/events-by-category.component';
+import { CreateQrcodeComponent } from './components/administrator/create-qrcode/create-qrcode.component';
+import { DeletedEventsComponent } from './components/administrator/deleted-events/deleted-events.component';
+import { ValidateTicketComponent } from './components/administrator/create-qrcode/validate-ticket/validate-ticket.component';
 
 
 const routes: Routes = [
-  { path: '', component: RecentEventsComponent},
-  { path: 'events-by-category/:category', component: EventsByCategoryComponent},
-  { path: 'denied', component: DeniedPageComponent},
+  { path: '', component: RecentEventsComponent },
+  { path: 'events-by-category/:category', component: EventsByCategoryComponent },
+  { path: 'denied', component: DeniedPageComponent },
   { path: 'login-form', component: LoginComponent },
   { path: 'user-register-form', component: UserRegisterFormComponent },
   { path: 'sites', component: TouristPlacesComponent },
   { path: 'forgot-my-password', component: ForgotMyPasswordComponent },
-  { path: 'event-detail/:eventId', component: EventDetailComponent},
+  { path: 'event-detail/:eventId', component: EventDetailComponent },
   { path: 'site-detail/:siteId', component: SiteDetailComponent },
   { path: 'login-confirm/:key', component: LoginComponent },
   { path: 'change-password/:key', component: ChangePasswordComponent },
@@ -48,13 +51,18 @@ const routes: Routes = [
   { path: 'calendar/:detail/:siteId', component: CalendarComponent },
   { path: 'define-password/:key', component: DefinePasswordComponent },
   { path: 'events/:nameCategory', component: EventsListComponent},
+  { path: 'customer/:ticketId', component: ValidateTicketComponent},
+
+  { path: 'deleted-events', component: DeletedEventsComponent, canActivate: [RestrictRoutesService], data: { expectedRole: ["1", "2"] } },
   { path: 'create-admin', component: CreateAdminComponent, canActivate: [RestrictRoutesService], data: {expectedRole: ["1"]}},
+  
   { path: 'create-facebook-event', component: CreateFacebookEventComponent, canActivate: [RestrictRoutesService], data: {expectedRole: ["1", "2"]}},
   { path: 'create-event', component: CreateEventComponent, canActivate: [RestrictRoutesService], data: {expectedRole: ["1", "2"]}},
   { path: 'create-site', component: CreateSiteComponent, canActivate: [RestrictRoutesService], data: {expectedRole: ["1", "2"]}},
   { path: 'admin-page', component: AdminComponent, canActivate: [RestrictRoutesService], data: {expectedRole: ["1", "2"]}},
   { path: 'edit-site/:siteId', component: EditSiteComponent, canActivate: [RestrictRoutesService], data: {expectedRole: ["1", "2"]} },
-
+  
+  { path: 'tickets/:ticketId', component: CreateQrcodeComponent, canActivate: [RestrictRoutesService], data: {expectedRole: ["1", "2", "3"]}},
   { path: 'themes', component: ThemesListComponent, canActivate: [RestrictRoutesService],data: {expectedRole: ["1", "2", "3"]}},
   { path: 'user', component: EditUserComponent, canActivate: [RestrictRoutesService],data: {expectedRole: ["1", "2", "3"]} },
   { path: 'user-page', component: UserComponent, canActivate: [RestrictRoutesService], data: {expectedRole: ["1", "2", "3"]}},

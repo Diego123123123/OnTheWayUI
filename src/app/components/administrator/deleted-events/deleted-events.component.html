@@ -1,0 +1,33 @@
+<div class="admin">
+  <h1>Deleted events</h1>
+  <br />
+  <ul class="events" *ngFor="let event of events">
+    <li>
+      <mdb-card class="form-events">
+        <div class="media mb-1">
+          <a class="media-left waves-light">
+            <img class="rounded-circle" id="image" src="{{event.imageUrl}}" alt="Generic placeholder image">
+          </a>
+          <div class="media-body">
+            <h4 class="media-heading"><strong>Name Event:</strong>{{event.name}}</h4>
+            <h3> <i id="icon" class="fa fa-calendar"></i>  <strong>Category:</strong> {{event.nameCategory}}</h3>
+            <p><strong>Description:</strong> {{event.description}}</p>
+            <p>
+              <strong>Start Date:</strong> {{event.startDate | date : 'fullDate'}}
+              {{event.startDate | date : 'shortTime'}}
+            </p>
+            <p>
+              <strong>End Date:</strong> {{event.finishDate | date : 'fullDate'}}
+              {{event.finishDate | date : 'shortTime'}}
+            </p>
+          </div>
+          <div class="media-rigth">
+            <p><strong>People Interested:</strong> {{event.popularidad}}</p>
+            <button mdbBtn type="button" mdbWavesEffect class="{{ 'buttonPrimaryStyle' | theme }}" routerLink="/event-detail/{{event.eventId}}"><mdb-icon icon="eye" size="lg" class="mr-1"></mdb-icon></button>
+          </div>
+        </div>
+      </mdb-card>
+    </li>
+  </ul>
+  <app-paginator (data)="refreshEvents($event)"></app-paginator>
+</div>

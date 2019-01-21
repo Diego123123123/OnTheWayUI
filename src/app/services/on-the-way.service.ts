@@ -52,7 +52,7 @@ export class OnTheWayService {
     return this.httpClient.post(urlId, data, { headers: new HttpHeaders().set('Authorization', 'Bearer '+token)});
   }
 
-  protected patch(identifier: any, data: any) {
+  public patch(identifier: any, data: any) {
     let token = sessionStorage.getItem('token');
     let urlId: any;
     urlId = this.getUrl(identifier);
@@ -77,12 +77,17 @@ export class OnTheWayService {
     return this.httpClient.put(urlId, data);
   }
 
+  protected personalizedUrlPut(url, obj) {
+    const auxurl = this.urlAzure + '/' + url;
+    return this.httpClient.put(auxurl, obj);
+  }
+
   protected delete(identifier: any, data?: any){
     let token = sessionStorage.getItem('token');
     let urlId: any;
     urlId = this.getUrl(identifier);
     return this.httpClient.delete(urlId, {
-      headers: new HttpHeaders().set('Authorization', 'Bearer '+token)});
+      headers: new HttpHeaders().set('Authorization', 'Bearer ' + token)});
   }
 
   public errorType(error) {

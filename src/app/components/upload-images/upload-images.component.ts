@@ -32,7 +32,7 @@ export class UploadImagesComponent implements OnInit {
   @ViewChild('visor') view: ElementRef;
   @ViewChild('file') file: ElementRef;
   @Output('saveImage') saveImage: EventEmitter<Object> = new EventEmitter<Object>();
-  constructor(private blob: BlobService, private images: ImageService, private dialogService: DialogService,) {
+  constructor(private blob: BlobService, private images: ImageService, private dialogService: DialogService) {
     this.currentFile = null
     this.config = null
     this.percent = 0

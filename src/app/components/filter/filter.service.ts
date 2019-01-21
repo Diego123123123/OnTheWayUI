@@ -31,4 +31,8 @@ export class FilterService {
     return this.name;
   }
 
+  addParam(param: IParams) {
+    this.params.push(param);
+  }
+
 }

@@ -1,0 +1,28 @@
+<mdb-card class="form-create-qrcode">
+  <div class="shop-card" id="contentToConvert">
+      <div class="title">
+        <Strong>{{eventName}}</Strong>
+      </div>
+      <div class="desc">
+        <Strong>Customer: {{ticket.customerName}}</Strong>
+      </div><br>
+      <div class="code">
+          <qrcode [qrdata]="myAngularxQrCode" [size]="300" [level]="'M'"></qrcode>
+      </div>
+      <div class="cta">
+        <div class="price">
+          {{priceTicket.amount}} {{priceTicket.money}}<br>
+          <div style="text-transform: uppercase;">{{priceTicket.nameSiteInEvent}}</div>
+        </div>
+        <!-- button class="btn">Add to cart<span class="bg"></span></button -->
+          <div style="float:right;margin-top:1%;">
+              <strong>Start Date: {{dateTime[0]}} </strong><br>
+              <strong>Start Time: {{dateTime[1]}} </strong>
+          </div>
+      </div>
+    
+  </div>
+  <div class=" nav-tabs tabs-3" style="background-color:black;color:aliceblue"(click)="sendEmail()">
+      <h3 class="modal-title w-100  text-center" id="Event"><i class="fa fa-envelope"></i> Send Ticket By Mail </h3>
+  </div>
+</mdb-card>

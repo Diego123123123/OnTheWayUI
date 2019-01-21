@@ -21,7 +21,7 @@
   <div class="modals" *ngIf="!checked">
     <div class="md-form">
       <i class="fa fa-calendar prefix"></i>
-      <input #dateEnd type="date" id="end" placeholder="" (ngModelChange)="verifeEnd($event)" formControlName="endDate" class="form-control" data-error="The conclusion date can not be before the start date" min="{{dateEndValid}}" mdbInputDirective>
+      <input #dateEnd type="date" id="end" placeholder="" (ngModelChange)="verifeEnd($event)" formControlName="endDate" class="form-control" data-error="The conclusion date can not be before the start date or empty" min="{{dateEndValid}}" mdbInputDirective>
       <label for="end" class="font-weight-light">End Date</label>
     </div>
   </div>

@@ -24,4 +24,9 @@ export class PricesSiteService extends OnTheWayService {
   public removePrice(identifier: any) {
     return this.delete(identifier);
   }
+
+  public buyTicket(priceId: number, price: any) {
+    const url = 'prices/' + priceId + '/available-tickets';
+    return this.personalizedUrlPut(url, price);
+  }
 }

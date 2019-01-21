@@ -3,4 +3,5 @@ export interface IPrice {
     Amount: number;
     NameSiteInEvent: string;
     Money: string;
+    TicketsAvailable: number;
 }

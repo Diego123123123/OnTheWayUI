@@ -13,6 +13,11 @@ export class PriceService extends OnTheWayService {
     constructor(public http: HttpClient) {
         super('prices', http);
     }
+
+    public getPrice(id: number){
+        return this.getOne(id);
+    }
+
     public createPrice(price: IPrice) {
         return this.post(price);
     }
@@ -23,5 +28,9 @@ export class PriceService extends OnTheWayService {
 
     public removePrice(identifier: any) {
         return this.delete(identifier);
+    }
+
+    public buyTicket(prideId) {
+
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AdminEventsService } from '../../../services/admin-events.service';
 import { FilterService } from '../../filter/filter.service';
 import { PaginatorService } from '../../paginator/paginator.service';
@@ -7,6 +7,8 @@ import { UsersForEventsService } from '../../../services/users-for-events.servic
 import { DialogService } from '../../../common/dialog/dialog.service';
 import { IDialog, TypeOfDialog, IconOfDialog } from '../../../common/dialog/dialog.model';
 import { PreferredEventsService } from '../../../services/preferred-events.service';
+import { EventsService } from '../../../services/events.service';
+import * as jsonPatch from 'fast-json-patch'
 
 @Component({
   selector: 'app-admin-events',
@@ -14,6 +16,9 @@ import { PreferredEventsService } from '../../../services/preferred-events.servi
   styleUrls: ['./admin-events.component.scss']
 })
 export class AdminEventsComponent implements OnInit {
+  @Input() showDeleted: boolean;
+  @Input() showRecents: boolean;
+
   private events: Array<any>;
   private dialogOptions: IDialog = {
     title: 'Delete event',
@@ -25,63 +30,61 @@ export class AdminEventsComponent implements OnInit {
     keyboardEsc: true
   };
 
-  constructor(private dialogService: DialogService, private serviceUserByEvent: UsersForEventsService, private adminEventsservice: AdminEventsService, 
-    private filterService: FilterService, private paginatorService: PaginatorService, private preferences: PreferredEventsService ) {
+  constructor(private dialogService: DialogService, private serviceUserByEvent: UsersForEventsService, private adminEventsservice: AdminEventsService,
+    private filterService: FilterService, private paginatorService: PaginatorService, private preferences: PreferredEventsService,
+    private eventsService: EventsService) {
     this.events = [];
-   }
+  }
 
-   refreshEvents(data?: Array<IParams>) {
-      this.getRecentEvents();
-    }
+  refreshEvents(data?: Array<IParams>) {
+    this.getRecentEvents();
+  }
 
-   public getRecentEvents() {
-    this.filterService.Params = [this.paginatorService.PageSize, this.paginatorService.PageNumber, this.filterService.NameParam];
-    if (this.filterService.Params[2].value === ''){
-    this.adminEventsservice.getEvents(this.filterService.Params).subscribe(response => {
-      this.events = response['results'];
-      for(let event of this.events){
-        this.preferences.getPopularity(event.eventId).subscribe(data => {
-          event.popularidad = data;
-          console.log(event);
-        });
-      }
-      this.paginatorService.TotalElements = response['count'];
-      for (var _i = 0; _i < this.events.length; _i++) {
-        this.verifeCantPersons(_i);
-      }
-    });}
-    else{
-      this.filterService.Params = [this.paginatorService.PageSize, this.paginatorService.PageNumber, this.filterService.NameParam];
+  public getRecentEvents() {
+    this.filterService.Params = [this.paginatorService.PageSize, this.paginatorService.PageNumber, this.filterService.NameParam, { key: "StatusId", value: 2 }];
+    if (this.filterService.Params[2].value === '') {
       this.adminEventsservice.getEvents(this.filterService.Params).subscribe(response => {
         this.events = response['results'];
-        for(let event of this.events){
+        for (let event of this.events) {
           this.preferences.getPopularity(event.eventId).subscribe(data => {
             event.popularidad = data;
-            console.log(event);
           });
         }
         this.paginatorService.TotalElements = response['count'];
         for (var _i = 0; _i < this.events.length; _i++) {
-          this.verifeCantPersons(_i);
+          this.getNumberUsersByEvent(_i);
+        }
+      });
+    }
+    else {
+      this.filterService.Params = [this.paginatorService.PageSize, this.paginatorService.PageNumber, this.filterService.NameParam, { key: "StatusId", value: 2 }];
+      this.adminEventsservice.getEvents(this.filterService.Params).subscribe(response => {
+        this.events = response['results'];
+        for (let event of this.events) {
+          this.preferences.getPopularity(event.eventId).subscribe(data => {
+            event.popularidad = data;
+          });
+        }
+        this.paginatorService.TotalElements = response['count'];
+        for (var _i = 0; _i < this.events.length; _i++) {
+          this.getNumberUsersByEvent(_i);
         }
       });
     }
   }
 
-  verifeCantPersons(event){
+  getNumberUsersByEvent(event) {
     this.serviceUserByEvent.getUsers(this.events[event]['id']).subscribe(response => {
-      this.events[event]['cant'] = response['totalUsers'];
-      console.log('response', response);
+      this.events[event]['numberUsers'] = response['totalUsers'];
     });
   }
 
   ngOnInit() {
     this.adminEventsservice.getEvents().subscribe(response => {
       this.events = response['results'];
-      for(let event of this.events){
+      for (let event of this.events) {
         this.preferences.getPopularity(event.eventId).subscribe(data => {
           event.popularidad = data;
-          console.log(event);
         });
       }
     });
@@ -90,7 +93,8 @@ export class AdminEventsComponent implements OnInit {
 
   deleteEvent(eventId) {
     let dialog: IDialog;
-    this.adminEventsservice.deleteEvent(eventId).subscribe( response => {
+    var patch = [{ op: 'replace', path: '/StatusId', value: 5 }];
+    this.eventsService.deleteEvent(eventId).subscribe(response => {
       dialog = {
         title: 'Successful',
         description: 'You deleted the event successfully.',

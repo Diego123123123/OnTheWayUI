@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
+  showDeletedEvents: boolean = false;
+  showRecentEvents: boolean = true;
   idRole: string;
   isSuperAdmin: boolean;
 

@@ -1,6 +1,6 @@
 <!-- Section heading -->
-<div mdbModal #priceModal="mdbModal" class="modal fade top " id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+<div mdbModal #priceModal="mdbModal" class="modal fade top " id="frameModalTop" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel" aria-hidden="true">
   <div [class]="priceDialog.type" id="modal" role="document">
     <!--Content-->
     <div class="modal-content">
@@ -8,7 +8,26 @@
       <div class="modal-header {{ 'headerPrimaryStyle' | theme }}">
         <p class="heading lead" id="myModalLabel">Prices</p>
       </div>
+      <div mdbModal #buyModal='mdbModal' style="background-color: white" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="myBasicModalLabel" aria-hidden="true">
+        <h1>Buy ticket</h1>
+        <br>
+        <div class="row">
+          <div class="col">
+            <input type="text" id="customerName">
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col">
+            <div id="paypal-checkout-btn1">
+            </div>
+          </div>
+        </div>
 
+        <button type="button" class="{{ 'buttonPrimaryStyle' | theme }}" data-dismiss="modal" (click)="buyModal.hide()">Close</button>
+
+      </div>
       <!--Body-->
       <div class="modal-body">
         <table class="table">
@@ -17,34 +36,58 @@
               <th scope="col" id="colname">Name Place</th>
               <th scope="col" id="colcost">Cost</th>
               <th scope="col" id="colmoney">Money</th>
+              <th scope="col" id="colmoney">Tickets available</th>
+              <th *ngIf="!isAdmin" scope="col" id="colmoney"></th>
               <th *ngIf="isAdmin">Actions</th>
+              <th *ngIf="permitBuy">Pay by paypal</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let price of prices">
+            <tr *ngFor="let price of prices; let i = index" [attr.data-index]="i">
               <td *ngIf="!isAdmin">{{ price.nameSiteInEvent }}</td>
               <td *ngIf="!isAdmin">{{ price.amount }}</td>
               <td *ngIf="!isAdmin">{{ price.money }}</td>
 
+              <td *ngIf="!isAdmin && price.ticketsAvailable > 19">{{ price.ticketsAvailable }}</td>
+              <td id="tooltipWarn" *ngIf="!isAdmin && price.ticketsAvailable <= 19 && price.ticketsAvailable != 0">
+                <span class="tooltipwarning">Only {{ price.ticketsAvailable }} tickets left</span>
+                {{ price.ticketsAvailable }}</td>
+              <td id="tooltipDang" *ngIf="!isAdmin && price.ticketsAvailable == 0">
+                <span class="tooltipdanger">Sold Out! No tickets!</span>
+                0</td>
               <td *ngIf="isAdmin && isEvent"><input class="nameInput" id="{{ price.priceId }}name" value="{{ price.nameSiteInEvent }}">
               <td *ngIf="isAdmin && isEvent"><input class="amountInput" id="{{ price.priceId }}amount" value="{{ price.amount }}">
               <td *ngIf="isAdmin && isEvent"><input class="moneyInput" id="{{ price.priceId }}money" value="{{ price.money }}">
+              <td *ngIf="isAdmin && isEvent"><input class="nameInput" id="{{ price.priceId }}ticketsAvailable" value="{{ price.ticketsAvailable }}">
+
               <td *ngIf="isAdmin && !isEvent"><input class="nameInput" id="{{ price.priceSiteId }}name" value="{{ price.nameSiteInEvent }}">
               <td *ngIf="isAdmin && !isEvent"><input class="amountInput" id="{{ price.priceSiteId }}amount" value="{{ price.amount }}">
               <td *ngIf="isAdmin && !isEvent"><input class="moneyInput" id="{{ price.priceSiteId }}money" value="{{ price.money }}">
+
               <td>
-                <a *ngIf="isAdmin && isEvent" class="teal-text"><i class="fa fa-pencil {{'iconPrimaryStyle' | theme}}" mdbTooltip="Edit the Price" (click)="editPrice(price.priceId)"></i></a>
-                <a *ngIf="isAdmin && isEvent" class="red-text"><i class="fa fa-times {{'iconPrimaryStyle' | theme}}" mdbTooltip="Delete the Price" (click)="deletePrice(price.priceId)"></i></a>
-                <a *ngIf="isAdmin && !isEvent" class="teal-text"><i class="fa fa-pencil {{'iconPrimaryStyle' | theme}}" mdbTooltip="Edit the Price" (click)="editPrice(price.priceSiteId)"></i></a>
-                <a *ngIf="isAdmin && !isEvent" class="red-text"><i class="fa fa-times {{'iconPrimaryStyle' | theme}}" mdbTooltip="Delete the Price" (click)="deletePrice(price.priceSiteId)"></i></a>
+                <a *ngIf="isAdmin && isEvent" class="teal-text"><i class="fa fa-pencil {{'iconPrimaryStyle' | theme}}"
+                    mdbTooltip="Edit the Price" (click)="editPrice(price.priceId)"></i></a>
+                <a *ngIf="isAdmin && isEvent" class="red-text"><i class="fa fa-times {{'iconPrimaryStyle' | theme}}"
+                    mdbTooltip="Delete the Price" (click)="deletePrice(price.priceId)"></i></a>
+
+                <a *ngIf="isAdmin && !isEvent" class="teal-text"><i class="fa fa-pencil {{'iconPrimaryStyle' | theme}}"
+                    mdbTooltip="Edit the Price" (click)="editPrice(price.priceSiteId)"></i></a>
+                <a *ngIf="isAdmin && !isEvent" class="red-text"><i class="fa fa-times {{'iconPrimaryStyle' | theme}}"
+                    mdbTooltip="Delete the Price" (click)="deletePrice(price.priceSiteId)"></i></a>
               </td>
+               <td>
+                  <div *ngIf="permitBuy"><button id="tooltipDang" class="paypal" [disabled]="price.ticketsAvailable == 0" (click)='showModal(buyModal, price.amount, price.priceId, i)'><i class="fa fa-paypal"></i>
+                  </button></div>
+                </td>
             </tr>
             <tr>
               <td><input *ngIf="isAdmin" id="inputName" [(ngModel)]="namePlace">
               <td><input *ngIf="isAdmin" id="inputAmount" [(ngModel)]="amount">
               <td><input *ngIf="isAdmin" id="inputMoney" [(ngModel)]="money">
+              <td><input *ngIf="isAdmin" type="number" id="inputName" [(ngModel)]="ticketsAvailable">
               <td>
-                <a *ngIf="isAdmin" class="blue-text"><i class="fa fa-plus {{'iconPrimaryStyle' | theme}}" mdbTooltip="Create a new Price" (click)="addPrice()"></i></a>
+                <a *ngIf="isAdmin" class="blue-text"><i class="fa fa-plus {{'iconPrimaryStyle' | theme}}" mdbTooltip="Create a new Price"
+                    (click)="addPrice()"></i></a>
               </td>
             </tr>
           </tbody>
@@ -52,6 +95,5 @@
         <button mdbBtn class="{{ 'buttonPrimaryStyle' | theme }}" id="back" (click)="priceModal.hide()" mdbWavesEffect>Close</button>
       </div>
     </div>
-    <!--/.Content-->
   </div>
 </div>
