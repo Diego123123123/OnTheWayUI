@@ -157,7 +157,7 @@ export class PriceTableComponent implements OnInit {
         EventId: Number(this.itemId),
         Amount: Number(this.amount),
         NameSiteInEvent: this.namePlace,
-        Money: this.money,
+        Money: "USD",
         TicketsAvailable: Number(this.ticketsAvailable),
       }
       price = newPrice;

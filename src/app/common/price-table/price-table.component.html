@@ -6,15 +6,20 @@
     <div class="modal-content">
       <!--Header-->
       <div class="modal-header {{ 'headerPrimaryStyle' | theme }}">
-        <p class="heading lead" id="myModalLabel">Prices</p>
+        <p class="heading lead" id="myModalLabel"><strong>PRICES</strong></p>
       </div>
       <div mdbModal #buyModal='mdbModal' style="background-color: white" class="modal fade" tabindex="-1" role="dialog"
         aria-labelledby="myBasicModalLabel" aria-hidden="true">
-        <h1>Buy ticket</h1>
+        <div class="modal-header {{ 'headerPrimaryStyle' | theme }}">
+          <p class="heading lead" id="myModalLabel"><strong>BUY TICKET</strong></p>
+        </div>
         <br>
-        <div class="row">
+        <div class="row" style="margin:2%;">
           <div class="col">
-            <input type="text" id="customerName">
+                  <div class="md-form form-sm">
+                    <input mdbInputDirective type="text" id="customerName" class="form-control" minlength="4">
+                    <label for="customerName">Ticket Owner </label>
+                  </div>
           </div>
         </div>
         <br>
@@ -35,7 +40,7 @@
             <tr>
               <th scope="col" id="colname">Name Place</th>
               <th scope="col" id="colcost">Cost</th>
-              <th scope="col" id="colmoney">Money</th>
+              <th *ngIf="!isAdmin" scope="col" id="colmoney">Money</th>
               <th scope="col" id="colmoney">Tickets available</th>
               <th *ngIf="!isAdmin" scope="col" id="colmoney"></th>
               <th *ngIf="isAdmin">Actions</th>
@@ -57,7 +62,6 @@
                 0</td>
               <td *ngIf="isAdmin && isEvent"><input class="nameInput" id="{{ price.priceId }}name" value="{{ price.nameSiteInEvent }}">
               <td *ngIf="isAdmin && isEvent"><input class="amountInput" id="{{ price.priceId }}amount" value="{{ price.amount }}">
-              <td *ngIf="isAdmin && isEvent"><input class="moneyInput" id="{{ price.priceId }}money" value="{{ price.money }}">
               <td *ngIf="isAdmin && isEvent"><input class="nameInput" id="{{ price.priceId }}ticketsAvailable" value="{{ price.ticketsAvailable }}">
 
               <td *ngIf="isAdmin && !isEvent"><input class="nameInput" id="{{ price.priceSiteId }}name" value="{{ price.nameSiteInEvent }}">
@@ -83,7 +87,6 @@
             <tr>
               <td><input *ngIf="isAdmin" id="inputName" [(ngModel)]="namePlace">
               <td><input *ngIf="isAdmin" id="inputAmount" [(ngModel)]="amount">
-              <td><input *ngIf="isAdmin" id="inputMoney" [(ngModel)]="money">
               <td><input *ngIf="isAdmin" type="number" id="inputName" [(ngModel)]="ticketsAvailable">
               <td>
                 <a *ngIf="isAdmin" class="blue-text"><i class="fa fa-plus {{'iconPrimaryStyle' | theme}}" mdbTooltip="Create a new Price"
