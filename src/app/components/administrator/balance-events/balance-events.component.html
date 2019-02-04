@@ -1,0 +1,49 @@
+<div class="admin">
+  <h2 class="font-weight-bold">
+    <strong>{{ event?.name }}</strong>
+  </h2>
+  <h5 class="font-weight-bold"> Category : {{event?.nameCategory}}</h5>
+  <p class="detail grey-text">Date: {{event?.startDate | date : 'fullDate'}} to {{event?.finishDate | date : 'fullDate'}}</p>
+  <br />
+  <div *ngIf="tickets.length">
+    <h3 class="font-weight-bold">Tickets</h3>
+    <table mdbTable bordered="true">
+      <thead>
+        <tr>
+          <th class="{{ 'headerPrimaryStyle' | theme }} headTable" *ngFor="let head of headTickets" scope="col">{{head}} </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr mdbTableCol *ngFor="let ticket of tickets">
+          <th scope="row" class="cell">{{ ticket.typeTicket }}</th>
+          <td class="cell">{{ ticket.price }} $</td>
+          <td class="cell">{{ ticket.numberTicketsEnabled }}</td>
+          <td class="cell">{{ ticket.numberTicketsSold }}</td>
+          <td class="cell">{{ ticket.numberTicketsRemaining }}</td>
+          <td class="amountObtained">{{ ticket.amountObtained }} $</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <br />
+  <div *ngIf="userTickets.length">
+    <h3 class="font-weight-bold">User Tickets</h3>
+    <table mdbTable mdbTableScroll scrollY="true" maxHeight="1000" bordered="true">
+      <thead>
+        <tr>
+          <th class="{{ 'headerPrimaryStyle' | theme }} headTable" *ngFor="let head of headUserTickets; let i = index" scope="col">{{head}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let userTicket of userTickets; let i = index">
+          <th scope="row" class="cell">{{ i + 1 }}</th>
+          <td class="cell">{{ userTicket.ownerTicket}}</td>
+          <td class="cell">{{ userTicket.nameAccount }}</td>
+          <td class="cell">{{ userTicket.purchaseDate | date : 'fullDate' }}</td>
+          <td class="cell">{{ userTicket.amountTicket }} $</td>
+          <td class="cell">{{ userTicket.stateQR }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

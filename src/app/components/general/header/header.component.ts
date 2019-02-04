@@ -35,6 +35,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private username: string;
   private userId: any;
   defaultProfileImg: String = "assets/images/default-user-icon.jpg";
+  public isCommonUserLoggedIn: boolean;
 
   private dialogOptions: IDialog = {
     title: 'Log out',
@@ -53,11 +54,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private themesListService: ThemesListService, private currentUserService: CurrentUserService, private alertService: AlertService) {
     this.preferedOption = false;
     this.enable = false;
+    this.isCommonUserLoggedIn = false;
     this.subscription = this.messageService.getMessage().subscribe(message =>{
       this.preferedOption = true;
       this.enable = true;
       this.username = sessionStorage.getItem('user');
       this.userId = sessionStorage.getItem('userId');
+      if (sessionStorage.getItem("role") === "3") {
+        this.isCommonUserLoggedIn = true;
+      }
     });
   }
 
@@ -75,6 +80,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     var resgistered = this.username ? true : false;
     this.preferedOption = resgistered;
     this.enable = resgistered;
+    this.isCommonUserLoggedIn = resgistered;
     this.consumeCategories();
     this.themeRef = this.themesListService.themeSubject$.subscribe(() => {
       this.theme = this.themesListService.Theme;
@@ -145,6 +151,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['/sites']);
   }
 
+  showBoughtTickets() {
+    this.router.navigate(['/bought-tickets/userTicket']);
+  }
+
   /**
    * This method delete datas in sessionStorage of an user logged 
   */
@@ -155,9 +165,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     sessionStorage.removeItem('userId');
     sessionStorage.removeItem('user');
     sessionStorage.removeItem('themeId');
+    localStorage.removeItem('tokenOTW')
     this.router.navigate(['/']);
     this.enable = false;
     this.preferedOption = false;
+    this.isCommonUserLoggedIn = false;
     this.frame.hide();
   }
 
@@ -175,5 +187,4 @@ export class HeaderComponent implements OnInit, OnDestroy {
     };
     this.alertService.Options = alertOptions;
   }
-
 }

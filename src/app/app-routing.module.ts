@@ -33,10 +33,13 @@ import { EventsByCategoryComponent } from './components/events-by-category/event
 import { CreateQrcodeComponent } from './components/administrator/create-qrcode/create-qrcode.component';
 import { DeletedEventsComponent } from './components/administrator/deleted-events/deleted-events.component';
 import { ValidateTicketComponent } from './components/administrator/create-qrcode/validate-ticket/validate-ticket.component';
+import { BoughtTicketsComponent } from './components/bought-tickets/bought-tickets.component';
+import { AdvancedSearchComponent } from './components/general/advanced-search/advanced-search.component';
+import { BalanceEventsComponent } from './components/administrator/balance-events/balance-events.component';
 
 
 const routes: Routes = [
-  { path: '', component: RecentEventsComponent },
+  { path: '', component: AdvancedSearchComponent },
   { path: 'events-by-category/:category', component: EventsByCategoryComponent },
   { path: 'denied', component: DeniedPageComponent },
   { path: 'login-form', component: LoginComponent },
@@ -54,7 +57,8 @@ const routes: Routes = [
   { path: 'customer/:ticketId', component: ValidateTicketComponent},
 
   { path: 'deleted-events', component: DeletedEventsComponent, canActivate: [RestrictRoutesService], data: { expectedRole: ["1", "2"] } },
-  { path: 'create-admin', component: CreateAdminComponent, canActivate: [RestrictRoutesService], data: {expectedRole: ["1"]}},
+  { path: 'balance-event/:eventId', component: BalanceEventsComponent, canActivate: [RestrictRoutesService], data: { expectedRole: ["1", "2"] } },
+  { path: 'create-admin', component: CreateAdminComponent, canActivate: [RestrictRoutesService], data: { expectedRole: ["1"] } },
   
   { path: 'create-facebook-event', component: CreateFacebookEventComponent, canActivate: [RestrictRoutesService], data: {expectedRole: ["1", "2"]}},
   { path: 'create-event', component: CreateEventComponent, canActivate: [RestrictRoutesService], data: {expectedRole: ["1", "2"]}},
@@ -68,6 +72,7 @@ const routes: Routes = [
   { path: 'user-page', component: UserComponent, canActivate: [RestrictRoutesService], data: {expectedRole: ["1", "2", "3"]}},
   { path: 'past-event', component: PastEventsComponent, canActivate: [RestrictRoutesService], data: {expectedRole: ["1", "2", "3"]}},
   { path: 'past-event/:preferenceId/:eventId', component: EventRatingComponent, canActivate: [RestrictRoutesService], data: {expectedRole: ["1", "2", "3"]}},
+  { path: 'bought-tickets/userTicket', component: BoughtTicketsComponent, canActivate: [RestrictRoutesService], data: {expectedRole: ["3"]}},
   {path: '**', component: PageNotFoundComponent},
 ];
 

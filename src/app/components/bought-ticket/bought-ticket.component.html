@@ -1,0 +1,38 @@
+<div *ngIf="boughtTicket" class="ticket-event-list">
+
+    <div class="card card-image" [ngStyle]="{'background-image': 'url(' + boughtTicket.eventImageUrl + ')' }">
+        <div class="text-white text-center align-items-center rgba-black-strong py-5 px-4 rounded">
+            <div>
+                <h6 class="cyan-text">
+                    <i [class]="'fa fa-' + categoryIcon"></i>
+                    <strong> {{ boughtTicket.eventCategory }}</strong>
+                </h6>
+                <div class="main-content">
+                    <div class="front">
+                        <h3 class="py-3 font-weight-bold">
+                            <strong>{{ boughtTicket.eventName }}</strong>
+                        </h3>
+
+                        <h3 class="details">
+                            <strong>{{ boughtTicket.eventDescription }}</strong>
+                        </h3>
+                    </div>
+
+                    <div class="back">
+                        <h3 class="py-3 font-weight-bold">
+                            <p class="event-status">{{ boughtTicket.eventStatusName }}</p>
+                            <p class="amount">{{ boughtTicket.priceAmount }}{{ boughtTicket.priceMoney }}</p>
+                            <strong>{{ boughtTicket.priceNameSiteInEvent }}</strong>
+                        </h3>
+                        <h3 class="details">
+                            <strong>{{ boughtTicket.customerName }}</strong>
+                        </h3>
+                    </div>
+                </div>
+                <a mdbBtn size="md" rounded="true" class="{{ 'buttonPrimaryStyle' | theme }}" mdbWavesEffect (click)='onClick()'>
+                    <i class="fa fa-eye left"></i> View Ticket</a>
+            </div>
+        </div>
+    </div>
+
+</div>

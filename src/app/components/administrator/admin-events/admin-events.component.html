@@ -22,6 +22,7 @@
             </div>
             <div class="media-rigth">
               <p><strong>People Interested:</strong> {{event.popularidad}}</p>
+              <button mdbBtn type="button" mdbWavesEffect class="{{ 'buttonPrimaryStyle' | theme }}" routerLink="/balance-event/{{event.eventId}}"><mdb-icon icon="usd" size="lg" class="mr-1"></mdb-icon></button>
               <button mdbBtn type="button" mdbWavesEffect class="{{ 'buttonPrimaryStyle' | theme }}" routerLink="/event-detail/{{event.eventId}}"><mdb-icon icon="eye" size="lg" class="mr-1"></mdb-icon></button>
               <button mdbBtn type="button" mdbWavesEffect class="{{ 'buttonPrimaryStyle' | theme }}" data-target="#event.eventId" (click)="frame.show(event.eventId)"><mdb-icon icon="trash" size="lg" class="mr-1"></mdb-icon></button>
             </div>

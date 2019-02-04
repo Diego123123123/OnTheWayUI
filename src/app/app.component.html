@@ -1,3 +1,8 @@
 <app-alert></app-alert>
 <app-header></app-header>
+<div class="view intro-2" [ngStyle]="{'background': 'url(' + theme.imageUrl + ')'}">
+    <div class="full-bg-img">
+      <router-outlet></router-outlet>
+    </div>
+</div>
 <app-footer></app-footer>

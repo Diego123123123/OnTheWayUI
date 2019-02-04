@@ -5,6 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { NavbarModule, WavesModule, ButtonsModule, CollapseModule } from 'angular-bootstrap-md';
 import { CardsFreeModule } from 'angular-bootstrap-md'
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatInputModule} from '@angular/material';
 
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -12,6 +14,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarModule } from 'angular-calendar';
 import { BlobModule } from 'angular-azure-blob-service';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { NgxMatDrpModule } from 'ngx-mat-daterange-picker';
 
 // Components
 import { UserRegisterFormComponent } from './components/user-register-form/user-register-form.component';
@@ -105,6 +110,11 @@ import { CreateQrcodeComponent } from './components/administrator/create-qrcode/
 import { QRCodeModule } from 'angularx-qrcode';
 import { DeletedEventsComponent } from './components/administrator/deleted-events/deleted-events.component';
 import { ValidateTicketComponent } from './components/administrator/create-qrcode/validate-ticket/validate-ticket.component';
+import { BoughtTicketsListComponent } from './components/bought-tickets-list/bought-tickets-list.component';
+import { BoughtTicketComponent } from './components/bought-ticket/bought-ticket.component';
+import { BoughtTicketsComponent } from './components/bought-tickets/bought-tickets.component';
+import { AdvancedSearchComponent } from './components/general/advanced-search/advanced-search.component';
+import { BalanceEventsComponent } from './components/administrator/balance-events/balance-events.component';
 
 @Injectable()
 
@@ -161,6 +171,11 @@ import { ValidateTicketComponent } from './components/administrator/create-qrcod
     CreateQrcodeComponent,
     DeletedEventsComponent,
     ValidateTicketComponent,
+    BoughtTicketsListComponent,
+    BoughtTicketComponent,
+    BoughtTicketsComponent,
+    AdvancedSearchComponent,
+    BalanceEventsComponent,
   ],
   imports: [
     BrowserModule,
@@ -179,14 +194,20 @@ import { ValidateTicketComponent } from './components/administrator/create-qrcod
     MatSelectModule,
     MatCheckboxModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAuj3cDQ1XRQS7BNNl7rxfloziL5iMkpSA'
+      apiKey: 'AIzaSyAuj3cDQ1XRQS7BNNl7rxfloziL5iMkpSA',
+      libraries: ["places"]
     }),
     BrowserAnimationsModule,
     CalendarModule.forRoot(),
     NgbModule,
     BlobModule.forRoot(),
     PipeModule,
-    QRCodeModule
+    QRCodeModule,
+    MatTabsModule,
+    NgxMatDrpModule,
+    MatChipsModule,
+    MatAutocompleteModule,
+    MatInputModule
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [

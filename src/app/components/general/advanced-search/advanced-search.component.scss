@@ -1,0 +1,73 @@
+.page{
+    margin-top: 10%;
+    color: black;
+}
+h2{
+    font-size: 520%;
+    font-weight: bolder;
+}
+h4{
+    font-size: 220%;
+    font-weight: bold;
+}
+.form-search-event {
+    width: 200%;
+    height: 80%;
+    margin: 1.5%;
+    margin-top: -0.6%;
+}
+
+.searchForm{
+    margin: 1%;
+    float: left;
+    width: 31%;
+    margin-left: -0.6%;
+}
+.calendar{
+    width: 31%;
+    margin-left: 2%;
+    margin-top: 0.2%;
+    color: black;
+}
+.current{
+    margin-left:12%;
+    margin-top:6%;
+}
+.current :hover{
+    color: royalblue; 
+}
+
+.example-chip-list {
+    margin-left: 5%;
+    width: 75%;
+    float: left;
+  }
+.example-full-width {
+width: 90%;
+}
+.container2{
+    min-width: 100%;
+    display: flex;
+    justify-content: center;
+    filter:  alpha(opacity=80);
+  }
+  .button{
+    padding-top: 1%;
+  }
+  .list{
+    padding-top: 1%;
+    list-style: none;
+  }
+  .numbers{
+    padding-right: 3%;
+    list-style: none;
+  }
+  .button1{
+    padding-left: 30%;
+  }
+#buttom{
+  color: black;
+  background: white;
+  opacity: 0.8;
+  border-radius: 10%;
+}

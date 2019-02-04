@@ -1,0 +1,30 @@
+.admin {
+  margin: 13% 10%;
+  border-radius: 20%;
+  text-align: center;
+}
+
+.headTable {
+  color: #fff;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 5px;
+}
+
+table td, table th {
+  vertical-align: middle;
+}
+
+.cell {
+  color: #000000;
+  font-weight: 400;
+}
+
+.amountObtained {
+  font-size: 2rem;
+  font-weight: 800;
+}

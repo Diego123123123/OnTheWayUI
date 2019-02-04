@@ -20,7 +20,7 @@ export class ThemePipe implements PipeTransform {
         result = 'waves-light btn btn-' + this.themesListService.Theme.buttonStyle;
         break;
       case 'headerPrimaryStyle':
-        result = '' + this.themesListService.Theme.buttonStyle;
+          result = '' + this.themesListService.Theme.buttonStyle;
         break;
       case 'buttonSecondaryStyle':
         result = 'ml-auto btn btn-outline-' + this.themesListService.Theme.buttonStyle;

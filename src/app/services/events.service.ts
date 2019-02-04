@@ -34,4 +34,8 @@ export class EventsService extends OnTheWayService {
   public deleteEvent(id:number){
     return this.delete(id);
   }
+
+  public advanceSearch(data, pageNum, pageSize){
+    return this.postOne(`filtered/?PageNumber=${pageNum}&PageSize=${pageSize}`, data);
+  }
 }

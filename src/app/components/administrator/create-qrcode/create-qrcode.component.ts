@@ -11,7 +11,7 @@ import html2canvas from 'html2canvas';
 import * as $ from 'jquery';
 import { ImageService } from '../../../services/image-service.service';
 import { Image } from '../../../models/image';
-import { ITicket } from '../../../models/ticket.model';
+import { IPatch } from 'src/app/models/patch.model';
 
 const Config: UploadParams = {
   sas: '?sv=2017-11-09&ss=bfqt&srt=sco&sp=rwdlacup&se=2019-11-22T02:18:32Z&st=2018-11-22T18:18:32Z&spr=https,http&sig=N3L6XE%2BWtkM%2FLijTWc1am074C5uMxwYgtGtMIaoI9aQ%3D',
@@ -52,7 +52,8 @@ export class CreateQrcodeComponent implements OnInit {
 
   ngOnInit() {
     this.ticketService.getTicketById(Number(this.ticketId)).subscribe(data => {
-      if(data['customerId'] == sessionStorage.getItem('userId')){
+      if(data['customerId'] == sessionStorage.getItem('userId') || sessionStorage.getItem('role') == '1'
+      || sessionStorage.getItem('role') == '2'){
         this.ticket = data;
         this.myAngularxQrCode = "https://otw-soft07.firebaseapp.com/customer/" + String(this.ticketId);
         this.eventService.getEventDetail(data['eventId']).subscribe(response => {
@@ -90,9 +91,6 @@ export class CreateQrcodeComponent implements OnInit {
         sasToken: Config.sas,
         file: this.currentFile,
         complete: () => {
-            console.log(this.imageURL.urlImage);
-            $('#iconimageid').attr('src', this.imageURL.urlImage);
-          
         },
         error: () => {
           console.log('Error !')
@@ -142,11 +140,14 @@ export class CreateQrcodeComponent implements OnInit {
 
   private editTicket(imageId){
     sessionStorage.removeItem('dataSrc');
-    let tick = this.ticket;
-    tick.imageId = imageId;
-    this.ticketService.editTicket(Number(this.ticketId), tick).subscribe(response => {
-      console.log(response);
-    });
+    let patchTicketOperations = new Array<IPatch>();
+    let patchImage: IPatch = {
+      op: 'replace',
+      path: '/imageId',
+      value: imageId,
+    };
+    patchTicketOperations.push(patchImage);    
+    this.ticketService.patch(this.ticketId + '/imageQr', patchTicketOperations).subscribe(() => {});
   }
 
   public sendEmail(){

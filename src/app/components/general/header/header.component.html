@@ -1,5 +1,5 @@
-<header class="h-100">
-  <mdb-navbar [SideClass]="'navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar intro-fixed-nav ' + theme.footerBackground" [containerInside]="false" style="height:80%;">
+<header class="h-100" style="position:absolute">
+  <mdb-navbar [SideClass]="'navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar intro-fixed-nav ' + theme.footerBackground" [containerInside]="false">
     <mdb-navbar-brand>
       <a class="logo navbar-brand">
         <img src="assets\images\logoFooter.png" class="animated bounce" height="90" width="140" alt="">        
@@ -34,6 +34,9 @@
         <li class="nav-item waves-light" mdbWavesEffect>
           <a class="nav-link" (click)="showSites()">Tourist<br>Places</a>
         </li>
+        <li *ngIf="isCommonUserLoggedIn" class="nav-item waves-light" mdbWavesEffect>
+          <a class="nav-link" (click)="showBoughtTickets()">Bought<br>Tickets</a>
+        </li>
       </ul>
       <ul class="navbar-nav nav-flex-icons">
           <li class="nav-item waves-light" mdbWavesEffect>
@@ -58,12 +61,8 @@
       </ul>
     </links>
   </mdb-navbar>
-  <div class="view intro-2" [ngStyle]="{'background': 'url(' + theme.imageUrl + ')'}">
-    <div class="full-bg-img" style="margin-top:2%;">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
 </header>
+
 <div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
   <div [class]="dialogOptions.type" role="document">

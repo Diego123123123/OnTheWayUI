@@ -48,10 +48,13 @@ export class AuthenticationService extends OnTheWayService {
 
   getUser(){
     let decodedResult = jwt_decode(sessionStorage.getItem('token'));
-    this.user.role = decodedResult['roles'];
-    this.user.userId = decodedResult['UserId'];
-    this.user.email = decodedResult['sub'];
-    this.user.themeId = decodedResult['ThemeId'];
+    this.user = {
+      token : sessionStorage.getItem('token'),
+      role : decodedResult['roles'],
+      userId : decodedResult['UserId'],
+      email : decodedResult['sub'],
+      themeId : decodedResult['ThemeId']
+    }
     return this.user;
   }
 

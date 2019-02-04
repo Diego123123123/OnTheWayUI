@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { OnTheWayService } from '../../on-the-way.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +21,16 @@ export class TicketsService extends OnTheWayService {
 
   public editTicket(id, data){
     return this.put(id, data);
+  }
+
+  public getTicketsByUser(params?){
+    if (params === undefined) {
+      return this.getAll();
+    }
+    let _params = new HttpParams();
+    params.forEach(element => {
+      _params = _params.set(element.key, element.value);
+    });
+    return this.personalizedGetOne('userTicket', _params);
   }
 }

@@ -6,9 +6,6 @@ import { IDialog, TypeOfDialog, IconOfDialog } from '../../common/dialog/dialog.
 import { DialogService } from '../../common/dialog/dialog.service';
 import { ConfirmUserRegistrationService } from '../../services/confirm-user-registration.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
-import { AppError} from '../../common/errors/app-error';
-import * as jwt_decode from "jwt-decode";
 
 
 import { Md5 } from 'ts-md5/dist/md5';
@@ -28,24 +25,23 @@ import { CurrentUserService } from '../user/current-user.service';
 export class LoginComponent implements OnInit {
 
   private key: any;
+  loginForm: FormGroup;
+  private username : string;
+  private roles :any;
+  @Output() openForm = new EventEmitter<any>();
+  @Input() redirectTo: string = null;
+  @Output() redirectToFunc = new EventEmitter<any>();
 
-@Output() openForm = new EventEmitter<any>();
-
-    loginForm: FormGroup;
-    private username : string;
-    private roles :any;
-
-
-    constructor(private _md5: Md5, private route: ActivatedRoute, private fb: FormBuilder,  private router: Router, private dialogService: DialogService, 
-      private authorizationService: AuthenticationService, private messageService: MessageService, private userService: UserService, private themesListService: ThemesListService,
-      private confirmService: ConfirmUserRegistrationService, private currentUserService: CurrentUserService) {
-      this.roles = { '1' : PageRole.SUPERADMIN, '2': PageRole.ADMIN, '3': PageRole.USER}
-      this.loginForm = fb.group({
-        email: ['', [Validators.email, Validators.required]],
-        password: ['', Validators.required],
-      });
-      
-    }
+  constructor(private _md5: Md5, private route: ActivatedRoute, private fb: FormBuilder,  private router: Router, private dialogService: DialogService, 
+    private authorizationService: AuthenticationService, private messageService: MessageService, private userService: UserService, private themesListService: ThemesListService,
+    private confirmService: ConfirmUserRegistrationService, private currentUserService: CurrentUserService) {
+    this.roles = { '1' : PageRole.SUPERADMIN, '2': PageRole.ADMIN, '3': PageRole.USER}
+    this.loginForm = fb.group({
+      email: ['', [Validators.email, Validators.required]],
+      password: ['', Validators.required],
+    });
+    
+  }
 
   ngOnInit() {
       this.key = this.route.snapshot.paramMap.get('key');
@@ -91,7 +87,12 @@ export class LoginComponent implements OnInit {
       let idRole  =  sessionStorage.getItem('role');
       let userRole : PageRole;
       userRole = this.roles[idRole];
-      this.router.navigate([userRole]);
+      if(this.redirectTo){
+        this.router.navigate([this.redirectTo]);
+        this.redirectToFunc.emit();
+      }else{
+        this.router.navigate([userRole]);
+      }
       var themeId = sessionStorage.getItem('themeId');
       let _themeId = themeId ? Number(themeId): 1;
       this.themesListService.getThemeById(_themeId).then(result => { this.themesListService.Theme = result; });

@@ -6,13 +6,13 @@ import { AppError, UnauthorizedError, NotFoundError,
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { HttpParams } from '@angular/common/http';
-import { RequestOptions } from '@angular/http';
+import { RequestOptions, Headers } from '@angular/http';
 
 @Injectable()
 
 export class OnTheWayService {
   protected urlAzure: string = 'https://onthewaybackend20181205043641.azurewebsites.net/';
-  //protected urlAzure: string = 'http://localhost:57663/';
+  // protected urlAzure: string = 'http://localhost:57663/';
 
   protected url: string;
   constructor(protected endpoint: string, protected httpClient: HttpClient) {
@@ -36,6 +36,16 @@ export class OnTheWayService {
       return this.httpClient.get(urlId);
     }
     return this.httpClient.get(urlId, {headers: new HttpHeaders().set('Authorization', 'Bearer '+token)});
+  }
+
+  protected personalizedGetOne(identifier, params) {
+    let token = sessionStorage.getItem('token');
+    let urlId: any;
+    urlId = this.getUrl(identifier);
+    if(token == null){
+      return this.httpClient.get(urlId);
+    }
+    return this.httpClient.get(urlId, {headers: new HttpHeaders().set('Authorization', 'Bearer '+token), params: params});
   }
 
   protected post(data: any) {
@@ -73,8 +83,11 @@ export class OnTheWayService {
 
   protected put(identifier: any, data: any) {
     let urlId: any;
+    let token = sessionStorage.getItem('token');
     urlId = this.getUrl(identifier);
-    return this.httpClient.put(urlId, data);
+    return this.httpClient.put(urlId, data, {
+      headers: new HttpHeaders().set('Authorization', 'Bearer '+token)
+    });
   }
 
   protected personalizedUrlPut(url, obj) {

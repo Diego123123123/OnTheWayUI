@@ -2,3 +2,14 @@
     width: 30%;
     margin: 10% 35%;
 }
+@media screen and (max-width:700px ) {
+    .form-login{
+        margin: 34% 5% 10%;
+        width: 90%;
+        text-align: center;
+    }
+    
+    .prefix {
+        display: grid;
+    }
+}

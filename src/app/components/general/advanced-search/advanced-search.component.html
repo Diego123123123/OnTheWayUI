@@ -1,0 +1,128 @@
+<div class="page">
+  <div class="container h-100">
+    <div class="row align-items-center justify-content-center">
+            <div *ngIf="!searching" class="hero-content" id="{{'color' | theme}}">
+                <h2>Discover events near you</h2>
+                <h4>This is the best guide for you</h4>
+            </div><br>
+                  <mdb-card class="form-search-event"><br>
+                    <h5 style="margin-left:2%;"><strong>What are you looking for?</strong></h5>
+                    <form [formGroup]="searchForm">
+                        <div class="md-form form-sm searchForm" style="width:31%;">
+                          <i class="fa fa-star prefix" style="margin-left:95%;"></i>
+                          <input type="text" autocorrect="off" autocapitalize="off" spellcheck="off" placeholder="Activity" aria-label="Assignee" class="form-control" [formControl]="categoryControl" [matAutocomplete]="auto">
+                          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                            <mat-option *ngFor="let category of filteredOptions | async" [value]="category" (click)="addCategory(category)">
+                                {{category.categoryName}}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </div>
+                  
+                        <div class="md-form form-sm searchForm calendar">
+                          <div *ngIf="!isRange">
+                              <i class="fa fa-calendar prefix" (click)="rangeFlag()" style="margin-left:95%; margin-top: 2.5%;"></i>
+                              <mat-form-field class="example-full-width">
+                                <mat-select placeholder="Date" [formControl]="dateControl">
+                                  <mat-option *ngFor="let date of datetime.dates" [value]="date" (click)="setupPresets(typeDate = date.date)">
+                                    {{date.name}}
+                                  </mat-option>
+                                  <mat-option (click)="setupPresets(null, true)">Any day</mat-option>
+                                  <mat-option (click)="rangeFlag()">Specific date</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                          </div>
+                          <div *ngIf="isRange">
+                              <ngx-mat-drp (selectedDateRangeChanged)="updateRange($event, true)" [options]="options" #dateRangePicker></ngx-mat-drp>
+                              <i class="fa fa-close prefix" (click)="rangeFlag()" style="margin-left:95%; margin-top: 2.5%;"></i>
+                          </div>
+                          <div *ngIf="!isRangeTime" style="margin-top:-3%;">
+                            <i class="fa fa-clock-o prefix" (click)="rangeTimeFlag()" style="margin-left:95%; margin-top: 17%;"></i>
+                            <mat-form-field class="example-full-width">
+                              <mat-select placeholder="Time" [formControl]="timeControl">
+                                <mat-option (click)="setupTime(null, true)">Anytime</mat-option>
+                                <mat-option *ngFor="let time of datetime.times" [value]="time" (click)="setupTime(typeTime = time.time)">
+                                  {{time.name}}
+                                </mat-option>
+                                <mat-option (click)="rangeTimeFlag()">Specific time</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div *ngIf="isRangeTime" style="margin-top:-5.2%;">
+                            <i class="fa fa-close prefix" (click)="rangeTimeFlag()" style="margin-left:95%; margin-top: 17%;"></i>
+                            <div class="md-form" style="float:left;width: 60%;">
+                                <label for="startT">Start Time</label>
+                                <input id="startT" formControlName="startTime"  (ngModelChange)="openStart($event)" placeholder="Time" type="time" style="width: 110%;" mdbInputDirective>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="md-form form-sm searchForm" style="width:31%;">
+                            <i class="fa fa-globe prefix" style="margin-left:95%"></i>
+                            <input placeholder="Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl" value="{{region}}">
+                            <div class="current" (click)="setCurrentPosition()"><p>Use my current location <i class="fa fa-location-arrow prefix" style="margin-left:35%;margin-top:15%;"></i></p></div>
+                        </div>
+                    </form>
+                    <div>
+                      <mat-form-field class="example-chip-list">
+                        <mat-chip-list #chipList>
+                          <mat-chip *ngFor="let option of stackSearch">
+                            {{option.value}}<mat-icon matChipRemove><i (click)="remove(option)" class="fa fa-close prefix"></i></mat-icon>
+                          </mat-chip>
+                        </mat-chip-list>
+                      </mat-form-field>
+                      <div style="margin-left:82%; margin-top: 1%;">
+                        <button mdbBtn type="button" mdbWavesEffect (click)="searchAdvance()" class="{{ 'buttonPrimaryStyle' | theme}}">Search <i class="fa fa-search prefix"></i></button>
+                      </div>
+                    </div>
+                </mdb-card>
+            </div>
+  </div><br>
+
+  <div *ngIf="searching">
+      <!--Projects section v.4-->
+
+  <div *ngIf="found.exist">
+        <h4 style="margin-left: 2%">{{found.totalEvents}} events have been found</h4>
+
+        <!--Grid row-->
+        <div class="row">
+            <!--Grid column-->
+            <app-event class="col-md-4 mb-4" *ngFor="let event of found.events" [event]="event" (eventClick)="showEvent(event)"></app-event>
+
+        </div>
+        <!--Grid row-->
+
+        <div class="container2" *ngIf="found.totalEvents > 3">
+          <nav>
+            <ul class="pagination pg-darkgrey">
+              <li class="page-item">
+                <div class="button">
+                  <button mdbBtn type="button" class="{{ 'buttonPrimaryStyle' | theme }}" mdbTooltip="Previus Page" 
+                  placement="top" mdbWavesEffect (click)="found.prevPage()" [disabled]="found.currentPage == 1">
+                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                  </button>              
+                </div>            
+              </li>
+              <ul *ngFor="let page of found.pages" class="list">
+                <li *ngIf="page" class="page-item {{page.state}}" id="buttom"><a class="page-link" (click)="found.changePage(page.number)">{{page.number}}</a></li>
+              </ul> 
+              <li class="page-item">
+                <div class="button1">
+                  <button mdbBtn type="button" class="{{ 'buttonPrimaryStyle' | theme }}" mdbTooltip="Next Page" 
+                  placement="top" mdbWavesEffect (click)="found.nextPage()" [disabled]="found.currentPage == found.pagesAmount">
+                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </li>      
+            </ul>
+          </nav>
+        </div> 
+
+    </div>
+
+    <img *ngIf="found.loading" style="width:30%;margin-left:35%;" src="assets/images/spinner-progress.gif" />
+
+    <div *ngIf="!found.exist" style="height:300px"><h4 style="height:300px;margin-left: 2%;">Events not found</h4></div>
+    <br>
+  </div>
+</div>
